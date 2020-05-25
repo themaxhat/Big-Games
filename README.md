@@ -128,16 +128,16 @@ void draw(char board[][7]){
     
 }
 
-int minimax(char board[][7], bool taken[][7], vector <int> bottom, int depth, bool ismax){
+int minimax(char board[][7], bool taken[][7], vector <int> bottom, int alpha, int beta, int depth, bool ismax){
     int score;
-    //cout<<'.';
+
     //base case
     
 //    if ((depth == 0) || (game(board, taken, score))) {
-    if ((depth >=38) || (game(board, taken, score))) {
-        cout << "looking at (terminal) node" << endl;
-        cout << "score for this board is " << score << endl;
-        draw(board);
+    if ((depth <= 34) || (game(board, taken, score))) {
+        //cout << "looking at (terminal) node" << endl;
+        //cout << "score for this board is " << score << endl;
+        //draw(board);
         //return (score + depth);
         return (score);
         
@@ -158,13 +158,17 @@ int minimax(char board[][7], bool taken[][7], vector <int> bottom, int depth, bo
                 taken[bottom [c]][c] = true;
                 bottom [c] ++;
                         
-                        cout << "looking at (maximize) child node " << c << endl;
-                        draw(board);
+                        //cout << "looking at (maximize) child node " << c << endl;
+                        //draw(board);
                         
-                best = max(best, minimax(board, taken, bottom, depth-1, false));
+                best = max(best, minimax(board, taken, bottom, alpha, beta, depth-1, false));
                 bottom [c] --;
                 board[bottom [c]][c] = '_';
                 taken[bottom [c]][c] = false;
+                alpha = max(alpha, best);
+                    if (beta <= alpha){
+                        break;
+                    }
                 
             }
         }  
@@ -185,15 +189,17 @@ int minimax(char board[][7], bool taken[][7], vector <int> bottom, int depth, bo
                 taken[bottom [c]][c] = true;
                 bottom [c] ++;
                 
-                        cout << "looking at (minimize) child node " << c << endl;
-                        draw(board);
+                        //cout << "looking at (minimize) child node " << c << endl;
+                        //draw(board);
                         
-                best = min(best, minimax(board, taken, bottom, depth-1, true));
+                best = min(best, minimax(board, taken, bottom, alpha, beta, depth-1, true));
                 bottom [c] --;
                 board[bottom [c]][c] = '_';
                 taken[bottom [c]][c] = false;
-                
-                
+                beta = min(beta, best);
+                    if (beta <= alpha){
+                        break;
+                    }
             }
         }    
         return best;
@@ -219,6 +225,9 @@ int main(){
     bool over = false;
     string choice;
     int score;
+    
+    int alpha = -1000;
+    int beta = 1000;
     
     /*cout << "Welcome to CONNECT 4 Code Edition!\nWould you like to play vs. an A.I. or vs a friend\n";
     cin >> choice;
@@ -309,10 +318,10 @@ int main(){
                         taken[bottom [i]][i] = true;
                         bottom [i] ++;
                         
-                        cout << "looking at (main) child node " << i << endl;
-                        draw(board);
+                        //cout << "looking at (main) child node " << i << endl;
+                        //draw(board);
                         
-                        tempMinimaxValue =  minimax(board, taken, bottom, open-1, true);
+                        tempMinimaxValue =  minimax(board, taken, bottom, alpha, beta, open-1, false);
                             if (tempMinimaxValue > highest)
                             {
                                 highest = tempMinimaxValue;
