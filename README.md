@@ -134,12 +134,12 @@ int minimax(char board[][7], bool taken[][7], vector <int> bottom, int alpha, in
     //base case
     
 //    if ((depth == 0) || (game(board, taken, score))) {
-    if ((depth <= 26) || (game(board, taken, score))) {
+    if ((depth <= 28) || (game(board, taken, score))) {
         //cout << "looking at (terminal) node" << endl;
         //cout << "score for this board is " << score << endl;
         //draw(board);
-        //int move = (score + depth);
-        return (score);
+        return (score + depth);
+        //return (score);
         //return move;
     }
 
@@ -350,3 +350,4 @@ int main(){
     }
     
 }
+
