@@ -134,13 +134,13 @@ int minimax(char board[][7], bool taken[][7], vector <int> bottom, int alpha, in
     //base case
     
 //    if ((depth == 0) || (game(board, taken, score))) {
-    if ((depth <= 34) || (game(board, taken, score))) {
+    if ((depth <= 26) || (game(board, taken, score))) {
         //cout << "looking at (terminal) node" << endl;
         //cout << "score for this board is " << score << endl;
         //draw(board);
-        //return (score + depth);
+        //int move = (score + depth);
         return (score);
-        
+        //return move;
     }
 
     //maximizer
@@ -151,8 +151,7 @@ int minimax(char board[][7], bool taken[][7], vector <int> bottom, int alpha, in
         
         for (int c = 0; c < 7; c++) 
         {
-            
-            if (bottom[c] < 7)
+            if (bottom[c] < 6)
             {
                 board[bottom [c]][c] = 'O';
                 taken[bottom [c]][c] = true;
@@ -183,7 +182,7 @@ int minimax(char board[][7], bool taken[][7], vector <int> bottom, int alpha, in
         
         
         for (int c = 0; c < 7; c++){
-            if (bottom[c] < 7)
+            if (bottom[c] < 6)
             {
                 board[bottom [c]][c] = 'X';
                 taken[bottom [c]][c] = true;
@@ -283,11 +282,11 @@ int main(){
     else {*/
     
     while (over == false){
-        //system("clear");
+        system("clear");
         draw(board);
         
         over = game(board, taken, score);
-        cout << score << endl;
+        //cout << score << endl;
         
         if (over == true) {
             cout<<"AI wins!";
@@ -302,10 +301,10 @@ int main(){
             bottom [spotA] ++;
             open--;
         }
-        //system("clear");
+        system("clear");
         draw(board);
         over = game(board, taken, score);
-        cout << score << endl;
+        //cout << score << endl;
         
         int highest= -100;
         int tempMinimaxValue;    
@@ -313,13 +312,15 @@ int main(){
                 // DEBUG:  figure out what is the spotB
                 
                 for (int i = 0; i < 7; i++){
-                    if (bottom[i] < 7){
+                    if (bottom[i] < 6){
                         board[bottom [i]][i] = 'O';
                         taken[bottom [i]][i] = true;
                         bottom [i] ++;
                         
-                        //cout << "looking at (main) child node " << i << endl;
-                        //draw(board);
+                        /*if (bottom [i] > 6){
+                            cout << "looking at (main) child node " << i << endl;
+                            draw(board);
+                        }*/
                         
                         tempMinimaxValue =  minimax(board, taken, bottom, alpha, beta, open-1, false);
                             if (tempMinimaxValue > highest)
@@ -331,7 +332,7 @@ int main(){
                         board[bottom [i]][i] = '_';
                         taken[bottom [i]][i] = false;
                         
-                    }    
+                    }
                 }
                 
                 taken[bottom [spotB]][spotB] = true;
@@ -342,10 +343,10 @@ int main(){
             else{
                 cout<<"human wins!";
             }
-        //system("clear");
+        system("clear");
         draw(board);
         over = game(board, taken, score);
-        cout << score << endl;
+        //cout << move << endl;
     }
     
 }
