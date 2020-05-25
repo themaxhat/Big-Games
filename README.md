@@ -1,1 +1,112 @@
-# Big-Games
+# Tic-Tac-Toe(Random)
+
+#include<iostream>
+#include<vector>
+#include<stdlib.h>
+
+using namespace std;
+
+void valid(int &spot, vector <bool> taken){
+    while ((spot != 0 && spot != 1 && spot != 2 && spot != 3 && spot != 4 && 
+           spot != 5 && spot != 6 && spot != 7 && spot != 8) || taken[spot] == true){
+        cout<<"That's not avaible\ngo again\n";
+        cin>>spot;
+    }
+}
+void cvalid(int &cspot, vector <bool> taken, vector <char> board){
+    while ((cspot != 0 && cspot != 1 && cspot != 2 && cspot != 3 && cspot != 4 && 
+           cspot != 5 && cspot != 6 && cspot != 7 && cspot != 8) || taken[cspot] == true){
+        srand (time(NULL));
+        cspot = rand() % 9;
+        //cout<<cspot<<endl;        
+    }
+}  
+bool winning_stuff(vector <char> board, int open, bool game_over){
+        if(open==0){
+            game_over = true;
+            cout<<"your done\nno one won\n";
+        }
+        else if(board[0] == board[1] && board[1] == board[2]){
+            game_over = true;
+            cout<<board[1]<<" won the game\n";
+        }
+        else if(board[3] == board[4] && board[4] == board[5]){
+            game_over = true;
+            cout<<board[3]<<" won the game\n";
+        }
+        else if(board[6] == board[7] && board[7] == board[8]){
+            game_over = true;
+            cout<<board[6]<<" won the game\n";
+        }
+        else if(board[0] == board[3] && board[3] == board[6]){
+            game_over = true;
+            cout<<board[0]<<" won the game\n";
+        }
+        else if(board[1] == board[4] && board[4] == board[7]){
+            game_over = true;
+            cout<<board[1]<<" won the game\n";
+        }
+        else if(board[2] == board[5] && board[5] == board[8]){
+            game_over = true;
+            cout<<board[2]<<" won the game\n";
+        }
+        else if(board[0] == board[4] && board[4] == board[8]){
+            game_over = true;
+            cout<<board[0]<<" won the game\n";
+        }
+        else if(board[2] == board[4] && board[4] == board[6]){
+            game_over = true;
+            cout<<board[2]<<" won the game\n";
+        }
+        else{
+            game_over = false;
+        }
+    return game_over;
+}
+void draw(vector <char> brd){
+    cout<<"Tic-Tac-Toe\nHuman vs. Computer Edition\n";
+    cout<<"   |   |   \n";
+    cout<<" "<<brd[0]<< " | "<<brd[1]<<" | "<<brd[2]<<" \n";
+    cout<<"___|___|___\n";
+    cout<<"   |   |   \n";
+    cout<<" "<<brd[3]<< " | "<<brd[4]<<" | "<<brd[5]<<" \n";
+    cout<<"___|___|___\n";
+    cout<<"   |   |   \n";
+    cout<<" "<<brd[6]<< " | "<<brd[7]<<" | "<<brd[8]<<" \n";
+    cout<<"   |   |   \n";
+}
+int main(){
+    vector <bool> taken (9, false);
+    vector <char> board {'0','1','2','3','4','5','6','7','8'};
+    int spot;
+    int cspot;
+    int open = 9;
+    bool game_over = false;
+    
+    draw(board);
+    
+    while(game_over == false){
+        cout<<"Human, where do you want to go\n";
+        cin>>spot;
+        valid(spot, taken);
+        taken[spot] = true;
+        board[spot] = 'X';
+        open--;
+        
+        game_over = winning_stuff(board, open, game_over);
+        
+        if (game_over == false) {
+        cout<<"Computer...\n";
+        srand (time(NULL));
+        int cspot = rand() % 9;
+        //cout<<cspot<<endl;
+        cvalid(cspot, taken, board);
+        taken[cspot] = true;
+        board[cspot] = 'O';
+        open--;
+        }
+        system("clear");
+        draw(board);    
+        game_over = winning_stuff(board, open, game_over);
+        }
+    }
