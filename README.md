@@ -232,15 +232,16 @@ int main(){
     int alpha = -10000;
     int beta = 10000;
     
-    //cout << "Welcome to CONNECT 4 Code Edition!\nWould you like to play vs. an A.I. or vs a friend\n";
-    //cin >> choice;
-    //    while (choice != "AI" || choice != "friend"){
-   //         cout << "*invalid*\nAI or friend?\n";
-    //        cin >> choice;
-    //    }
+    cout << "Welcome to CONNECT 4 Code Edition!\nWould you like to play vs. an A.I. or vs a friend\n";
+    cin >> choice;
+        while ((choice != "AI") && (choice != "friend")){
+            cout << "*invalid*\nAI or friend?\n";
+            cin >> choice;
+        }
         
-    //if (choice == "friend"){
-    /*    draw(board);
+    if (choice == "friend"){
+        system("clear");
+        draw(board);
         
         while (over == false){
             if (over == true) {
@@ -282,14 +283,13 @@ int main(){
             over = game(board, taken, score);
             //cout << score << endl;
         }
-    //}*/
-    //else {
+    }
     
-    
+    else {
     while (over == false){
         system("clear");
         draw(board);
-        cout << score << endl;
+        //cout << score << endl;
         
         cout<<"Player 1, which column do you want to use\n";
         cin>>spotA;
@@ -351,4 +351,5 @@ int main(){
     //system("clear");
     draw(board);
     //cout << score << endl;
+    }
 }
