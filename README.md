@@ -346,8 +346,6 @@ int main(){
             }
         }
     }
-    
-    
     //system("clear");
     draw(board);
     //cout << score << endl;
