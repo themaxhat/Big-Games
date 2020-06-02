@@ -1,5 +1,6 @@
 # Connect 4
 
+//McRib
 #include<iostream>
 #include<vector>
  
