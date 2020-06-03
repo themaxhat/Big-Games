@@ -3,21 +3,21 @@
 
 using namespace std;
 
-bool game(char board[][7], bool taken[][7], int &score){
+bool game(string board[][7], bool taken[][7], int &score){
 
     //rows
 
     for (int row = 0; row < 6; row++){
-        char last = 'A';
+        string last = "A";
         int counter = 0;
         for (int column = 0; column < 7; column++){
             if (board[row][column] == last){
                 counter++;
                 if (counter == 4){
-                    if (last == 'X'){
+                    if (last == "\033[1;31mO\033[0m"){
                         score = -10;
                     }
-                    if (last == 'O'){
+                    if (last == "\033[1;33mO\033[0m"){
                         score = 10;
                     }
                     return true;
@@ -29,7 +29,7 @@ bool game(char board[][7], bool taken[][7], int &score){
             }
             else {
                 counter = 0;
-                last = 'A';
+                last = "A";
             }
         }
     }
@@ -37,16 +37,16 @@ bool game(char board[][7], bool taken[][7], int &score){
     //columns
 
     for (int column = 0; column < 7; column++){
-        char last = 'A';
+        string last = "A";
         int counter = 0;
         for (int row = 0; row < 6; row++){
             if (board[row][column] == last){
                 counter++;
                 if (counter == 4){
-                    if (last == 'X'){
+                    if (last == "\033[1;31mO\033[0m"){
                         score = -10;
                     }
-                    if (last == 'O'){
+                    if (last == "\033[1;33mO\033[0m"){
                         score = 10;
                     }
                     return true;
@@ -58,7 +58,7 @@ bool game(char board[][7], bool taken[][7], int &score){
             }
             else {
                 counter = 0;
-                last = 'A';
+                last = "A";
             }
         }
     }
@@ -70,12 +70,12 @@ bool game(char board[][7], bool taken[][7], int &score){
             if ((board[row][column] == board[row + 1][column + 1]) 
             && (board[row][column] == board[row + 2][column + 2])
             && (board[row][column] == board[row + 3][column + 3])
-            && (board[row][column] != '_')
+            && (board[row][column] != "_")
             && (row + 3 < 6) && (column + 3 < 7)){
-                if (board[row][column] == 'X'){
+                if (board[row][column] == "\033[1;31mO\033[0m"){
                     score = -10;
                     }
-                if (board[row][column] == 'O'){
+                if (board[row][column] == "\033[1;33mO\033[0m"){
                     score = 10;
                 }
                 return true;
@@ -90,12 +90,12 @@ bool game(char board[][7], bool taken[][7], int &score){
             if ((board[row][column] == board[row + 1][column - 1]) 
             && (board[row][column] == board[row + 2][column - 2])
             && (board[row][column] == board[row + 3][column - 3])
-            && (board[row][column] != '_')
+            && (board[row][column] != "_")
             && (row + 3 < 6) && (column - 3 >= 0)){
-                if (board[row][column] == 'X'){
+                if (board[row][column] == "\033[1;31mO\033[0m"){
                     score = -10;
                 }
-                if (board[row][column] == 'O'){
+                if (board[row][column] == "\033[1;33mO\033[0m"){
                     score = 10;
                 }
                 return true;
@@ -107,7 +107,7 @@ bool game(char board[][7], bool taken[][7], int &score){
     return false;
 }
 
-void draw(char board[][7]){
+void draw(string board[][7]){
     cout<<"          CONNECT 4\n";
     cout<<" _1_ _2_ _3_ _4_ _5_ _6_ _7_ "<<endl;
     cout<<"| "<<board[5][0]<<" | "<<board[5][1]<<" | "<<board[5][2]<<" | "<<board[5][3]<<" | "<<board[5][4]<<" | "<<board[5][5]<<" | "<<board[5][6]<<" |\n";
@@ -127,7 +127,7 @@ void draw(char board[][7]){
     */
 }
 
-int minimax(char board[][7], bool taken[][7], vector <int> bottom, int alpha, int beta, int depth, bool ismax){
+int minimax(string board[][7], bool taken[][7], vector <int> bottom, int alpha, int beta, int depth, bool ismax){
     int score;
 
     //base case
@@ -151,7 +151,7 @@ int minimax(char board[][7], bool taken[][7], vector <int> bottom, int alpha, in
         {
             if (bottom[c] < 6)
             {
-                board[bottom [c]][c] = 'O';
+                board[bottom [c]][c] = "\033[1;33mO\033[0m";
                 taken[bottom [c]][c] = true;
                 bottom [c] ++;
 
@@ -161,7 +161,7 @@ int minimax(char board[][7], bool taken[][7], vector <int> bottom, int alpha, in
                 best = max(best, minimax(board, taken, bottom, alpha, beta, depth-1, false));
 
                 bottom [c] --;
-                board[bottom [c]][c] = '_';
+                board[bottom [c]][c] = "_";
                 taken[bottom [c]][c] = false;
 
                 alpha = max(alpha, best);
@@ -183,7 +183,7 @@ int minimax(char board[][7], bool taken[][7], vector <int> bottom, int alpha, in
         for (int c = 0; c < 7; c++){
             if (bottom[c] < 6)
             {
-                board[bottom [c]][c] = 'X';
+                board[bottom [c]][c] = "\033[1;31mO\033[0m";
                 taken[bottom [c]][c] = true;
                 bottom [c] ++;
 
@@ -193,7 +193,7 @@ int minimax(char board[][7], bool taken[][7], vector <int> bottom, int alpha, in
                 best = min(best, minimax(board, taken, bottom, alpha, beta, depth-1, true));
                 bottom [c] --;
 
-                board[bottom [c]][c] = '_';
+                board[bottom [c]][c] = "_";
                 taken[bottom [c]][c] = false;
 
                 beta = min(beta, best);
@@ -209,11 +209,11 @@ int minimax(char board[][7], bool taken[][7], vector <int> bottom, int alpha, in
 int main(){
     vector <int> bottom {0, 0, 0, 0, 0, 0, 0};
     bool taken[6][7] = {};
-    char board[6][7] = {};
+    string board[6][7] = {};
 
     for (int row = 0; row < 6; row++){
         for (int column = 0; column < 7; column++){
-            board[row][column] = '_';
+            board[row][column] = "_";
         }
     }
 
@@ -250,7 +250,7 @@ int main(){
                 //validA(spotA, taken, bottom);
                 spotA = spotA - 1;
                 taken [bottom [spotA] ] [spotA] = true;
-                board [bottom [spotA] ] [spotA] = 'X';
+                board [bottom [spotA] ] [spotA] = "\033[1;31mO\033[0m";
                 bottom [spotA] ++;
                 open--;
             }
@@ -269,7 +269,7 @@ int main(){
                 //validB(spot, taken);
                 spotB = spotB - 1;
                 taken [bottom [spotB]] [spotB] = true;
-                board [bottom [spotB]] [spotB] = 'O';
+                board [bottom [spotB]] [spotB] = "\033[1;33mO\033[0m";
                 bottom [spotB] ++;
                 open--;
             }
@@ -291,7 +291,7 @@ int main(){
         cout<<"Player 1, which column do you want to use\n";
         cin>>spotA;
         spotA = spotA - 1;
-        board [bottom [spotA] ] [spotA] = 'X';
+        board [bottom [spotA] ] [spotA] = "\033[1;31mO\033[0m";
         taken [bottom [spotA] ] [spotA] = true;
         bottom [spotA] ++;
         open--;
@@ -312,7 +312,7 @@ int main(){
 
             for (int i = 0; i < 7; i++){
                 if (bottom[i] < 6){
-                    board[bottom [i]][i] = 'O';
+                    board[bottom [i]][i] = "\033[1;33mO\033[0m";
                     taken[bottom [i]][i] = true;
                     bottom [i] ++;
 
@@ -327,12 +327,12 @@ int main(){
                     }
 
                     bottom [i] --;
-                    board[bottom [i]][i] = '_';
+                    board[bottom [i]][i] = "_";
                     taken[bottom [i]][i] = false;
                 }
             }
 
-            board[bottom [spotB]][spotB] = 'O';
+            board[bottom [spotB]][spotB] = "\033[1;33mO\033[0m";
             taken[bottom [spotB]][spotB] = true;
             bottom [spotB] ++;
             open--;
