@@ -1,3 +1,8 @@
+/*
+draw 2
+
+runs out of hand
+*/
 #include<list>
 #include<iostream>
 #include<stdlib.h>
@@ -102,10 +107,56 @@ void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, i
 
 			break;
 		}
+
+		if ((i == uter.size()) && (validation == false)){
+			break;
+		}
+
 	}
 
-	if (validation == false){
+	while (validation == false){
 		draw(uter, cards);
+		for (int i = 0; i <= uter.size(); i++){
+			list <string>::iterator it = uter.begin();
+			advance(it, i);
+
+			valid(top, validation, it);
+			if (validation == true){
+				top = *it;
+				uter.erase(it);
+				powers(order, reverse, top);
+
+				if ((top == "\033[1;37mC  \033[0m" ) || (top == "\033[1;37m+4 \033[0m")){
+					cnewcolor = rand() % 4;
+					if ((top == "\033[1;37mC  \033[0m") && (cnewcolor == 0)){
+						top = "\033[1;31mC  \033[0m";
+					}
+					if ((top == "\033[1;37mC  \033[0m") && (cnewcolor == 1)){
+						top = "\033[1;32mC  \033[0m";
+					}
+					if ((top == "\033[1;37mC  \033[0m") && (cnewcolor == 2)){
+						top = "\033[1;34mC  \033[0m";
+					}	
+					if ((top == "\033[1;37mC  \033[0m") && (cnewcolor == 3)){
+						top = "\033[1;33mC  \033[0m";
+					}
+					if ((top == "\033[1;37m+4 \033[0m") && (cnewcolor == 0)){
+						top = "\033[1;31m+4 \033[0m";
+					}
+					if ((top == "\033[1;37m+4 \033[0m") && (cnewcolor == 1)){
+						top = "\033[1;32m+4 \033[0m";
+					}
+					if ((top == "\033[1;37m+4 \033[0m") && (cnewcolor == 2)){
+						top = "\033[1;34m+4 \033[0m";
+					}	
+					if ((top == "\033[1;37m+4 \033[0m") && (cnewcolor == 3)){
+						top = "\033[1;33m+4 \033[0m";
+					}
+				}
+
+				break;
+			}
+		}
 	}
 }
 
@@ -235,8 +286,9 @@ void valid(string top, bool &validation, list <string>::iterator it){
 		"\033[1;31mS  \033[0m","\033[1;32mS  \033[0m","\033[1;33mS  \033[0m","\033[1;34mS  \033[0m","imax"
 	};
 	unordered_set <string> draw = {
-		"\033[1;31m+2 \033[0m","\033[1;32m+2 \033[0m","\033[1;33m+2 \033[0m","\033[1;34m+2 \033[0m"
-		"\033[1;31m+4 \033[0m","\033[1;32m+4 \033[0m","\033[1;33m+4 \033[0m","\033[1;34m+4 \033[0m","imax"
+		"\033[1;31m+2 \033[0m","\033[1;32m+2 \033[0m","\033[1;33m+2 \033[0m","\033[1;34m+2 \033[0m",
+		"\033[1;31m+4 \033[0m","\033[1;32m+4 \033[0m","\033[1;33m+4 \033[0m","\033[1;34m+4 \033[0m",
+		"\033[1;37m+4 \033[0m","imax"
 	};
 
 	string ValidNumber1;
