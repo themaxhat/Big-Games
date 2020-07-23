@@ -1,5 +1,5 @@
 /*
-draw until you play
+Change color doesn't work sometimes
 */
 #include<list>
 #include<iostream>
