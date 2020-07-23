@@ -13,8 +13,8 @@ using namespace std;
 
 void change(bool &running, bool reverse, int &order, list <string> hand, list <string> comp1, list <string> comp2, list <string> comp3, list <string> cards);
 void draw(list <string> &comp, list <string> &cards);
-void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, int &order, list <string> &cards);
-void humplay(list <string> &hand, string &top, bool &reverse, int &order, list <string> & cards);
+void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, int &order, list <string> &cards, bool &validation);
+void humplay(list <string> &hand, string &top,bool &validation, bool &reverse, int &order, list <string> &comp1, list <string> &comp2, list <string> &comp3, list <string> &cards);
 void powers(int &order, bool &reverse, string top);
 void table(string top, list <string> hand, list <string> comp1, list <string> comp2, list <string> comp3, list <string> cards);
 bool validnum(string top, bool &validation, list <string>::iterator it);
@@ -52,12 +52,11 @@ void draw(list <string> &comp, list <string> &cards){
 	cards.erase(it);
 }
 
-void humplay(list <string> &hand, string &top, bool &reverse, int &order, list <string> & cards){
-	bool validation = false;
+void humplay(list <string> &hand, string &top,bool &validation, bool &reverse, int &order, list <string> &comp1, list <string> &comp2, list <string> &comp3, list <string> &cards){
+	int whichcard;
 	string newcolor;
 	string choice;
-	int whichcard;
-
+	
 	if ((top == "\033[1;31m+2 \033[0m") || (top == "\033[1;32m+2 \033[0m") || (top == "\033[1;33m+2 \033[0m") || (top == "\033[1;34m+2 \033[0m")){
 		for (int i = 0; i < 2; i++){
 			draw(hand, cards);
@@ -103,6 +102,8 @@ void humplay(list <string> &hand, string &top, bool &reverse, int &order, list <
 	}
 	if (choice == "draw"){
 		draw(hand, cards);
+		table(top, hand, comp1, comp2, comp3, cards);
+		humplay(hand, top, reverse, validation, order, comp1, comp2, comp3, cards);
 	}
 	if (choice == "play"){
 		cout << "which card do you want to play? (Use the numbers below the cards) ";
@@ -117,38 +118,11 @@ void humplay(list <string> &hand, string &top, bool &reverse, int &order, list <
 			top = *it;
 			powers(order, reverse, top);
 		}
-			while (validation == false){
-				cout << "that card isn't valid, draw or play?\n";
-				cin >> choice;
-				while ((choice != "draw") && (choice != "play")){
-					cout << "*invalid*\ndo you want to draw or play?\n";
-					cin >> choice;
-				}
-				if (choice == "draw"){
-					draw(hand, cards);
-					validation = true;		
-				}
-				if (choice == "play"){
-					list <string>::iterator it = hand.begin();
-					cout << "which card do you want to play? (Use the numbers below the cards) ";
-					cin >> whichcard;
-					advance(it, whichcard - 1);
-					valid(top, validation, it);
-					
-					if (validation == false){
-							cout << "you lost your chance, I'm making you draw" << endl;
-							draw(hand, cards);
-							validation = true;
-					}
-					
-					else {
-						hand.erase(it);
-						top = *it;
-						powers(order, reverse, top);
-					}
-				}
-			}
-		//}
+		if (validation == false){
+			cout << "You can't use that card\n";
+			humplay(hand, top, reverse, validation, order, comp1, comp2, comp3, cards);
+		}
+
 
 		//change color
 		if ((*it == "\033[1;37mC  \033[0m" ) || (*it == "\033[1;37m+4 \033[0m")){
@@ -185,12 +159,12 @@ void humplay(list <string> &hand, string &top, bool &reverse, int &order, list <
 				top = "\033[1;33m+4\033[0m";
 			}
 		}
+	
 	}	
+
 }
 
-void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, int &order, list <string> &cards){
-	bool validation = false;
-
+void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, int &order, list <string> &cards, bool &validation){
 	if ((top == "\033[1;31m+2 \033[0m") || (top == "\033[1;32m+2 \033[0m") || (top == "\033[1;33m+2 \033[0m") || (top == "\033[1;34m+2 \033[0m")){
 		for (int i = 0; i < 2; i++){
 			draw(uter, cards);
@@ -228,9 +202,7 @@ void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, i
 		return;
 	}
 
-	for (int i = 0; i <= uter.size(); i++){
-		list <string>::iterator it = uter.begin();
-		advance(it, i);
+	for (list <string>::iterator it = uter.begin(); it != uter.end(); it++) {
 
 		valid(top, validation, it);
 		if (validation == true){
@@ -269,55 +241,16 @@ void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, i
 			break;
 		}
 
-		if ((i == uter.size()) && (validation == false)){
+/*
+		if ((i == uter.size() - 1) && (validation == false)){
 			break;
 		}
-
+*/
 	}
 
 	while (validation == false){
 		draw(uter, cards);
-		for (int i = 0; i <= uter.size(); i++){
-			list <string>::iterator it = uter.begin();
-			advance(it, i);
-
-			valid(top, validation, it);
-			if (validation == true){
-				top = *it;
-				uter.erase(it);
-				powers(order, reverse, top);
-
-				if ((top == "\033[1;37mC  \033[0m" ) || (top == "\033[1;37m+4 \033[0m")){
-					cnewcolor = rand() % 4;
-					if ((top == "\033[1;37mC  \033[0m") && (cnewcolor == 0)){
-						top = "\033[1;31mC  \033[0m";
-					}
-					if ((top == "\033[1;37mC  \033[0m") && (cnewcolor == 1)){
-						top = "\033[1;32mC  \033[0m";
-					}
-					if ((top == "\033[1;37mC  \033[0m") && (cnewcolor == 2)){
-						top = "\033[1;34mC  \033[0m";
-					}	
-					if ((top == "\033[1;37mC  \033[0m") && (cnewcolor == 3)){
-						top = "\033[1;33mC  \033[0m";
-					}
-					if ((top == "\033[1;37m+4 \033[0m") && (cnewcolor == 0)){
-						top = "\033[1;31m+4 \033[0m";
-					}
-					if ((top == "\033[1;37m+4 \033[0m") && (cnewcolor == 1)){
-						top = "\033[1;32m+4 \033[0m";
-					}
-					if ((top == "\033[1;37m+4 \033[0m") && (cnewcolor == 2)){
-						top = "\033[1;34m+4 \033[0m";
-					}	
-					if ((top == "\033[1;37m+4 \033[0m") && (cnewcolor == 3)){
-						top = "\033[1;33m+4 \033[0m";
-					}
-				}
-
-				break;
-			}
-		}
+		compplay(uter, cnewcolor, top, reverse, order, cards, validation);
 	}
 }
 
@@ -355,21 +288,27 @@ void powers(int &order, bool &reverse, string top){
 }
 
 void table(string top, list <string> hand, list <string> comp1, list <string> comp2, list <string> comp3, list <string> cards) {
-	//system("clear");
+	system("clear");
 	cout << "Play Pile: " << top << endl << endl;
 
 	cout << "Player 2 hand: " << comp1.size() << endl;
+	/*
 	for(auto i : comp1){
 		cout << i;
 	}
+	*/
 	cout << endl << "Player 3 hand: " << comp2.size() << endl;
+	/*
 	for(auto i : comp2){
 		cout << i;
 	}
+	*/
 	cout << endl << "Player 4 hand: " << comp3.size() << endl;
+	/*
 	for(auto i : comp3){
 		cout << i;
 	}
+	*/
 	cout << endl << "Deck size: " << cards.size() << endl;
 	cout << endl;
 
@@ -727,16 +666,16 @@ int main(){
 		table(top, hand, comp1, comp2, comp3, cards);
 		switch(order) {
 			case 1:
-				humplay(hand, top, reverse, order, cards);
+				humplay(hand, top, validation, reverse, order, comp1, comp2, comp3, cards);
 				break;
 			case 2:
-				compplay(comp1, cnewcolor, top, reverse, order, cards);
+				compplay(comp1, cnewcolor, top, reverse, order, cards, validation);
 				break;
 			case 3:
-				compplay(comp2, cnewcolor, top, reverse, order, cards);	
+				compplay(comp2, cnewcolor, top, reverse, order, cards, validation);	
 				break;
 			case 4:
-				compplay(comp3, cnewcolor, top, reverse, order, cards);	
+				compplay(comp3, cnewcolor, top, reverse, order, cards, validation);	
 				break;
 		}
 		table(top, hand, comp1, comp2, comp3, cards);
