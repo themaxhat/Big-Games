@@ -1,7 +1,5 @@
 /*
-draw 2
-
-runs out of hand
+draw until you play
 */
 #include<list>
 #include<iostream>
@@ -16,6 +14,7 @@ using namespace std;
 void change(bool &running, bool reverse, int &order, list <string> hand, list <string> comp1, list <string> comp2, list <string> comp3, list <string> cards);
 void draw(list <string> &comp, list <string> &cards);
 void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, int &order, list <string> &cards);
+void humplay(list <string> &hand, string &top, bool &reverse, int &order, list <string> & cards);
 void powers(int &order, bool &reverse, string top);
 void table(string top, list <string> hand, list <string> comp1, list <string> comp2, list <string> comp3, list <string> cards);
 bool validnum(string top, bool &validation, list <string>::iterator it);
@@ -53,6 +52,142 @@ void draw(list <string> &comp, list <string> &cards){
 	cards.erase(it);
 }
 
+void humplay(list <string> &hand, string &top, bool &reverse, int &order, list <string> & cards){
+	bool validation = false;
+	string newcolor;
+	string choice;
+	int whichcard;
+
+	if ((top == "\033[1;31m+2 \033[0m") || (top == "\033[1;32m+2 \033[0m") || (top == "\033[1;33m+2 \033[0m") || (top == "\033[1;34m+2 \033[0m")){
+		for (int i = 0; i < 2; i++){
+			draw(hand, cards);
+		}
+		if (top == "\033[1;31m+2 \033[0m"){
+			top = "\033[1;31m+2\033[0m";
+		}
+		if (top == "\033[1;32m+2 \033[0m"){
+			top = "\033[1;32m+2\033[0m";
+		}
+		if (top == "\033[1;33m+2 \033[0m"){
+			top = "\033[1;34m+2\033[0m";
+		}
+		if (top == "\033[1;34m+2 \033[0m"){
+			top = "\033[1;34m+2\033[0m";
+		}
+		return;
+	}	
+	if ((top == "\033[1;31m+4 \033[0m") || (top == "\033[1;32m+4 \033[0m") || (top == "\033[1;33m+4 \033[0m") || (top == "\033[1;34m+4 \033[0m")){
+		for (int i = 0; i < 4; i++){
+			draw(hand, cards);
+		}
+		if (top == "\033[1;31m+4 \033[0m"){
+			top = "\033[1;31m+4\033[0m";
+		}
+		if (top == "\033[1;32m+4 \033[0m"){
+			top = "\033[1;32m+4\033[0m";
+		}
+		if (top == "\033[1;33m+4 \033[0m"){
+			top = "\033[1;34m+4\033[0m";
+		}
+		if (top == "\033[1;34m+4 \033[0m"){
+			top = "\033[1;34m+4\033[0m";
+		}
+		return;
+	}
+	
+	cout << "do you want to draw or play?\n";
+	cin >> choice;
+	while ((choice != "draw") && (choice != "play")){
+		cout << "*invalid*\ndo you want to draw or play?\n";
+		cin >> choice;
+	}
+	if (choice == "draw"){
+		draw(hand, cards);
+	}
+	if (choice == "play"){
+		cout << "which card do you want to play? (Use the numbers below the cards) ";
+		cin >> whichcard;
+
+		list <string>::iterator it = hand.begin();
+		advance(it, whichcard - 1);
+
+		valid(top, validation, it);
+		if (validation == true){
+			hand.erase(it);
+			top = *it;
+			powers(order, reverse, top);
+		}
+			while (validation == false){
+				cout << "that card isn't valid, draw or play?\n";
+				cin >> choice;
+				while ((choice != "draw") && (choice != "play")){
+					cout << "*invalid*\ndo you want to draw or play?\n";
+					cin >> choice;
+				}
+				if (choice == "draw"){
+					draw(hand, cards);
+					validation = true;		
+				}
+				if (choice == "play"){
+					list <string>::iterator it = hand.begin();
+					cout << "which card do you want to play? (Use the numbers below the cards) ";
+					cin >> whichcard;
+					advance(it, whichcard - 1);
+					valid(top, validation, it);
+					
+					if (validation == false){
+							cout << "you lost your chance, I'm making you draw" << endl;
+							draw(hand, cards);
+							validation = true;
+					}
+					
+					else {
+						hand.erase(it);
+						top = *it;
+						powers(order, reverse, top);
+					}
+				}
+			}
+		//}
+
+		//change color
+		if ((*it == "\033[1;37mC  \033[0m" ) || (*it == "\033[1;37m+4 \033[0m")){
+			cout << "what color? ";
+			cin >> newcolor;
+			cout << endl;
+			if ((newcolor != "red") && (newcolor != "green") && (newcolor != "blue") && (newcolor != "yellow")){
+				cout << "*invalid*\nwhich color?\n";
+				cin >> newcolor;
+			}
+			if ((newcolor == "red") && (*it == "\033[1;37mC  \033[0m")){
+				top = "\033[1;31mC \033[0m";
+			}
+			if ((newcolor == "green") && (*it == "\033[1;37mC  \033[0m")){
+				top = "\033[1;32mC  \033[0m";
+			}
+			if ((newcolor == "blue") && (*it == "\033[1;37mC  \033[0m")){
+				top = "\033[1;34mC  \033[0m";
+			}	
+			if ((newcolor == "yellow") && (*it == "\033[1;37mC  \033[0m")){
+				top = "\033[1;33mC  \033[0m";
+			}
+
+			if ((newcolor == "red") && (*it == "\033[1;37m+4 \033[0m")){
+				top = "\033[1;31m+4 \033[0m";
+			}
+			if ((newcolor == "green") && (*it == "\033[1;37m+4 \033[0m")){
+				top = "\033[1;32m+4 \033[0m";
+			}
+			if ((newcolor == "blue") && (*it == "\033[1;37m+4 \033[0m")){
+				top = "\033[1;34m+4 \033[0m";
+			}	
+			if ((newcolor == "yellow") && (*it == "\033[1;37m+4 \033[0m")){
+				top = "\033[1;33m+4\033[0m";
+			}
+		}
+	}	
+}
+
 void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, int &order, list <string> &cards){
 	bool validation = false;
 
@@ -60,11 +195,37 @@ void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, i
 		for (int i = 0; i < 2; i++){
 			draw(uter, cards);
 		}
+		if (top == "\033[1;31m+2 \033[0m"){
+			top = "\033[1;31m+2\033[0m";
+		}
+		if (top == "\033[1;32m+2 \033[0m"){
+			top = "\033[1;32m+2\033[0m";
+		}
+		if (top == "\033[1;33m+2 \033[0m"){
+			top = "\033[1;34m+2\033[0m";
+		}
+		if (top == "\033[1;34m+2 \033[0m"){
+			top = "\033[1;34m+2\033[0m";
+		}
+		return;
 	}	
 	if ((top == "\033[1;31m+4 \033[0m") || (top == "\033[1;32m+4 \033[0m") || (top == "\033[1;33m+4 \033[0m") || (top == "\033[1;34m+4 \033[0m")){
 		for (int i = 0; i < 4; i++){
 			draw(uter, cards);
 		}
+		if (top == "\033[1;31m+4 \033[0m"){
+			top = "\033[1;31m+4\033[0m";
+		}
+		if (top == "\033[1;32m+4 \033[0m"){
+			top = "\033[1;32m+4\033[0m";
+		}
+		if (top == "\033[1;33m+4 \033[0m"){
+			top = "\033[1;34m+4\033[0m";
+		}
+		if (top == "\033[1;34m+4 \033[0m"){
+			top = "\033[1;34m+4\033[0m";
+		}
+		return;
 	}
 
 	for (int i = 0; i <= uter.size(); i++){
@@ -223,28 +384,32 @@ void valid(string top, bool &validation, list <string>::iterator it){
 	validation = false;
 
 	unordered_set <string> green = {
-		"\033[1;32m0  \033[0m","\033[1;32m0  \033[0m","\033[1;32m1  \033[0m","\033[1;32m1  \033[0m","\033[1;32m2  \033[0m","\033[1;32m2  \033[0m","\033[1;32m3  \033[0m","\033[1;32m3  \033[0m",
-		"\033[1;32m4  \033[0m","\033[1;32m4  \033[0m","\033[1;32m5  \033[0m","\033[1;32m5  \033[0m","\033[1;32m6  \033[0m","\033[1;32m6  \033[0m","\033[1;32m7  \033[0m","\033[1;32m7  \033[0m",
-		"\033[1;32m8  \033[0m","\033[1;32m8  \033[0m","\033[1;32m9  \033[0m","\033[1;32m9  \033[0m","\033[1;32m+2 \033[0m","\033[1;32m+2 \033[0m","\033[1;32mR  \033[0m","\033[1;32mR  \033[0m",
-		"\033[1;32mS  \033[0m","\033[1;32mS  \033[0m","\033[1;32m+4 \033[0m","\033[1;32mC  \033[0m","imax"
+		"\033[1;32m0  \033[0m","\033[1;32m1  \033[0m","\033[1;32m2  \033[0m","\033[1;32m3  \033[0m",
+		"\033[1;32m4  \033[0m","\033[1;32m5  \033[0m","\033[1;32m6  \033[0m","\033[1;32m7  \033[0m",
+		"\033[1;32m8  \033[0m","\033[1;32m9  \033[0m","\033[1;32m+2 \033[0m","\033[1;32mR  \033[0m",
+		"\033[1;32mS  \033[0m","\033[1;32m+4 \033[0m","\033[1;32mC  \033[0m","\033[1;32m+4\033[0m",
+		"\033[1;32m+2\033[0m","imax"
 	};
 	unordered_set <string> red = {
-		"\033[1;31m0  \033[0m","\033[1;31m0  \033[0m","\033[1;31m1  \033[0m","\033[1;31m1  \033[0m","\033[1;31m2  \033[0m","\033[1;31m2  \033[0m","\033[1;31m3  \033[0m","\033[1;31m3  \033[0m",
-		"\033[1;31m4  \033[0m","\033[1;31m4  \033[0m","\033[1;31m5  \033[0m","\033[1;31m5  \033[0m","\033[1;31m6  \033[0m","\033[1;31m6  \033[0m","\033[1;31m7  \033[0m","\033[1;31m7  \033[0m",
-		"\033[1;31m8  \033[0m","\033[1;31m8  \033[0m","\033[1;31m9  \033[0m","\033[1;31m9  \033[0m","\033[1;31m+2 \033[0m","\033[1;31m+2 \033[0m","\033[1;31mR  \033[0m","\033[1;31mR  \033[0m",
-		"\033[1;31mS  \033[0m","\033[1;31mS  \033[0m","\033[1;31m+4 \033[0m","\033[1;31mC  \033[0m","imax"
+		"\033[1;31m0  \033[0m","\033[1;31m1  \033[0m","\033[1;31m2  \033[0m","\033[1;31m3  \033[0m",
+		"\033[1;31m4  \033[0m","\033[1;31m5  \033[0m","\033[1;31m6  \033[0m","\033[1;31m7  \033[0m",
+		"\033[1;31m8  \033[0m","\033[1;31m9  \033[0m","\033[1;31m+2 \033[0m","\033[1;31mR  \033[0m",
+		"\033[1;31mS  \033[0m","\033[1;31m+4 \033[0m","\033[1;31mC  \033[0m","\033[1;31m+4\033[0m",
+		"\033[1;31m+2\033[0m","imax"
 	};
 	unordered_set <string> yellow = { 
-		"\033[1;33m0  \033[0m","\033[1;33m0  \033[0m","\033[1;33m1  \033[0m","\033[1;33m1  \033[0m","\033[1;33m2  \033[0m","\033[1;33m2  \033[0m","\033[1;33m3  \033[0m","\033[1;33m3  \033[0m",
-		"\033[1;33m4  \033[0m","\033[1;33m4  \033[0m","\033[1;33m5  \033[0m","\033[1;33m5  \033[0m","\033[1;33m6  \033[0m","\033[1;33m6  \033[0m","\033[1;33m7  \033[0m","\033[1;33m7  \033[0m",
-		"\033[1;33m8  \033[0m","\033[1;33m8  \033[0m","\033[1;33m9  \033[0m","\033[1;33m9  \033[0m","\033[1;33m+2 \033[0m","\033[1;33m+2 \033[0m","\033[1;33mR  \033[0m","\033[1;33mR  \033[0m",
-		"\033[1;33mS  \033[0m","\033[1;33mS  \033[0m","\033[1;33m+4 \033[0m","\033[1;33mC  \033[0m","imax"
+		"\033[1;33m0  \033[0m","\033[1;33m1  \033[0m","\033[1;33m2  \033[0m","\033[1;33m3  \033[0m",
+		"\033[1;33m4  \033[0m","\033[1;33m5  \033[0m","\033[1;33m6  \033[0m","\033[1;33m7  \033[0m",
+		"\033[1;33m8  \033[0m","\033[1;33m9  \033[0m","\033[1;33m+2 \033[0m","\033[1;33mR  \033[0m",
+		"\033[1;33mS  \033[0m","\033[1;33m+4 \033[0m","\033[1;33mC  \033[0m","\033[1;33m+4\033[0m",
+		"\033[1;33m+2\033[0m","imax"
     };
 	unordered_set <string> blue ={
-		"\033[1;34m0  \033[0m","\033[1;34m0  \033[0m","\033[1;34m1  \033[0m","\033[1;34m1  \033[0m","\033[1;34m2  \033[0m","\033[1;34m2  \033[0m","\033[1;34m3  \033[0m","\033[1;34m3  \033[0m",
-		"\033[1;34m4  \033[0m","\033[1;34m4  \033[0m","\033[1;34m5  \033[0m","\033[1;34m5  \033[0m","\033[1;34m6  \033[0m","\033[1;34m6  \033[0m","\033[1;34m7  \033[0m","\033[1;34m7  \033[0m",
-		"\033[1;34m8  \033[0m","\033[1;34m8  \033[0m","\033[1;34m9  \033[0m","\033[1;34m9  \033[0m","\033[1;34m+2 \033[0m","\033[1;34m+2 \033[0m","\033[1;34mR  \033[0m","\033[1;34mR  \033[0m",
-		"\033[1;34mS  \033[0m","\033[1;34mS  \033[0m","\033[1;34m+4 \033[0m","\033[1;34mC  \033[0m","imax"
+		"\033[1;34m0  \033[0m","\033[1;34m1  \033[0m","\033[1;34m2  \033[0m","\033[1;34m3  \033[0m",
+		"\033[1;34m4  \033[0m","\033[1;34m5  \033[0m","\033[1;34m6  \033[0m","\033[1;34m7  \033[0m",
+		"\033[1;34m8  \033[0m","\033[1;34m9  \033[0m","\033[1;34m+2 \033[0m","\033[1;34mR  \033[0m",
+		"\033[1;34mS  \033[0m","\033[1;34m+4 \033[0m","\033[1;34mC  \033[0m","\033[1;34m+4\033[0m",
+		"\033[1;34m+2\033[0m","imax"
 	};
 	unordered_set <string> black = {
 		"\033[1;37m+4 \033[0m", "\033[1;37mC  \033[0m","imax"
@@ -288,6 +453,8 @@ void valid(string top, bool &validation, list <string>::iterator it){
 	unordered_set <string> draw = {
 		"\033[1;31m+2 \033[0m","\033[1;32m+2 \033[0m","\033[1;33m+2 \033[0m","\033[1;34m+2 \033[0m",
 		"\033[1;31m+4 \033[0m","\033[1;32m+4 \033[0m","\033[1;33m+4 \033[0m","\033[1;34m+4 \033[0m",
+		"\033[1;31m+2\033[0m","\033[1;32m+2\033[0m","\033[1;33m+2\033[0m","\033[1;34m+2\033[0m",
+		"\033[1;31m+4\033[0m","\033[1;32m+4\033[0m","\033[1;33m+4\033[0m","\033[1;34m+4\033[0m",
 		"\033[1;37m+4 \033[0m","imax"
 	};
 
@@ -521,12 +688,10 @@ int main(){
 	
 	bool running = true;
 	string top;
-	string choice;
-	int whichcard;
+
 	bool reverse = false;
 	string color;
 	int order = 1;
-	string newcolor;
 	int cnewcolor;
 	bool validation;
 
@@ -560,129 +725,10 @@ int main(){
 	// play game
 	while (running == true) {
 		table(top, hand, comp1, comp2, comp3, cards);
-
-		if (order == 1) {
-			if ((top == "\033[1;31m+2 \033[0m") || (top == "\033[1;32m+2 \033[0m") || (top == "\033[1;33m+2 \033[0m") || (top == "\033[1;34m+2 \033[0m")){
-				for (int i = 0; i < 2; i++){
-					draw(hand, cards);
-				}
-			}	
-			if ((top == "\033[1;31m+4 \033[0m") || (top == "\033[1;32m+4 \033[0m") || (top == "\033[1;33m+4 \033[0m") || (top == "\033[1;34m+4 \033[0m")){
-				for (int i = 0; i < 4; i++){
-					draw(hand, cards);
-				}
-			}
-			
-			cout << "do you want to draw or play?\n";
-			cin >> choice;
-			while ((choice != "draw") && (choice != "play")){
-				cout << "*invalid*\ndo you want to draw or play?\n";
-				cin >> choice;
-			}
-			if (choice == "draw"){
-				draw(hand, cards);
-				table(top, hand, comp1, comp2, comp3,cards);
-			}
-			if (choice == "play"){
-				cout << "which card do you want to play? (Use the numbers below the cards) ";
-				cin >> whichcard;
-
-				list <string>::iterator it = hand.begin();
-				advance(it, whichcard - 1);
-
-				valid(top, validation, it);
-				if (validation == true){
-					hand.erase(it);
-					top = *it;
-					powers(order, reverse, top);
-				}
-				/*
-				if (validation == false){
-					validnum(top, validation, it);
-					if (validation == true){
-						hand.erase(it);
-						top = *it;
-						powers(order, reverse, top);
-					}
-					*/
-					while (validation == false){
-						cout << "that card isn't valid, draw or play?\n";
-						cin >> choice;
-						while ((choice != "draw") && (choice != "play")){
-							cout << "*invalid*\ndo you want to draw or play?\n";
-							cin >> choice;
-						}
-						if (choice == "draw"){
-							draw(hand, cards);
-							table(top, hand, comp1, comp2, comp3, cards);
-							validation = true;		
-						}
-						if (choice == "play"){
-							list <string>::iterator it = hand.begin();
-							cout << "which card do you want to play? (Use the numbers below the cards) ";
-							cin >> whichcard;
-							advance(it, whichcard - 1);
-							valid(top, validation, it);
-							
-							if (validation == false){
-									cout << "you lost your chance, I'm making you draw" << endl;
-									draw(hand, cards);
-									table(top, hand, comp1, comp2, comp3, cards);
-									validation = true;
-							}
-							
-							else {
-								hand.erase(it);
-								top = *it;
-								powers(order, reverse, top);
-							}
-						}
-					}
-				//}
-
-				//change color
-				if ((*it == "\033[1;37mC  \033[0m" ) || (*it == "\033[1;37m+4 \033[0m")){
-					cout << "what color? ";
-					cin >> newcolor;
-					cout << endl;
-					if ((newcolor != "red") && (newcolor != "green") && (newcolor != "blue") && (newcolor != "yellow")){
-						cout << "*invalid*\nwhich color?\n";
-						cin >> newcolor;
-					}
-					if ((newcolor == "red") && (*it == "\033[1;37mC  \033[0m")){
-						top = "\033[1;31mC \033[0m";
-					}
-					if ((newcolor == "green") && (*it == "\033[1;37mC  \033[0m")){
-						top = "\033[1;32mC  \033[0m";
-					}
-					if ((newcolor == "blue") && (*it == "\033[1;37mC  \033[0m")){
-						top = "\033[1;34mC  \033[0m";
-					}	
-					if ((newcolor == "yellow") && (*it == "\033[1;37mC  \033[0m")){
-						top = "\033[1;33mC  \033[0m";
-					}
-
-					if ((newcolor == "red") && (*it == "\033[1;37m+4 \033[0m")){
-						top = "\033[1;31m+4 \033[0m";
-					}
-					if ((newcolor == "green") && (*it == "\033[1;37m+4 \033[0m")){
-						top = "\033[1;32m+4 \033[0m";
-					}
-					if ((newcolor == "blue") && (*it == "\033[1;37m+4 \033[0m")){
-						top = "\033[1;34m+4 \033[0m";
-					}	
-					if ((newcolor == "yellow") && (*it == "\033[1;37m+4 \033[0m")){
-						top = "\033[1;33m+4\033[0m";
-					}
-				}
-
-				table(top, hand, comp1, comp2, comp3, cards);
-			}
-
-			change(running, reverse, order, hand, comp1, comp2, comp3, cards);
-		}
-
 		switch(order) {
+			case 1:
+				humplay(hand, top, reverse, order, cards);
+				break;
 			case 2:
 				compplay(comp1, cnewcolor, top, reverse, order, cards);
 				break;
@@ -693,12 +739,8 @@ int main(){
 				compplay(comp3, cnewcolor, top, reverse, order, cards);	
 				break;
 		}
-
 		table(top, hand, comp1, comp2, comp3, cards);
 		change(running, reverse, order, hand, comp1, comp2, comp3, cards);
-
-
-		
 	}
 
 	//game over
