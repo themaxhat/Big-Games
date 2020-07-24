@@ -22,14 +22,14 @@ void valid(string top, bool &validation, list <string>::iterator it);
 
 void change(bool &running, bool reverse, int &order, list <string> hand, list <string> comp1, list <string> comp2, list <string> comp3, list <string> cards){
 	if (reverse == false) {
-		sleep(5000); 
+		sleep(2); 
 		order++;
 		if ((order == 5) || (order == 6)){
 			order = 1;
 		}
 	}
 	if (reverse == true) {
-		sleep(5000);
+		sleep(2);
 		order--;
 		if ((order == 0) || (order == -1)){
 			order = 4;
