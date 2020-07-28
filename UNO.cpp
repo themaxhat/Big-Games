@@ -191,9 +191,10 @@ void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, i
 		"\033[1;37mC  \033[0m","imax"
 	};
 	unordered_set <string> five = {
-		"\033[1;37+4 \033[0m","imax"
+		"\033[1;37m+4 \033[0m","imax"
 	};
 
+	bool precise = false;
 	int best_score = 0;
 	int current_score;
 	list<string>::iterator best;
@@ -264,6 +265,7 @@ void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, i
 			if (current_score > best_score){
 				best_score = current_score;
 				best = it;
+				precise = true;
 			}
 
 			
@@ -271,12 +273,11 @@ void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, i
 	}
 
 
-	while (validation == false){
+	while ((validation == false) && (precise == false)){
 		draw(uter, cards);
 		best = uter.end();
 		best--;		
 		valid(top, validation, best);
-		//compplay(uter, cnewcolor, top, reverse, order, cards, validation);
 	}
 
 	top = *best;
@@ -346,7 +347,7 @@ void powers(int &order, bool &reverse, string top){
 }
 
 void table(string top, list <string> hand, list <string> comp1, list <string> comp2, list <string> comp3, list <string> cards) {
-	system("clear");
+	//system("clear");
 	cout << "Play Pile: " << top << endl << endl;
 
 	cout << "Player 2 hand: " << comp1.size() << endl;
@@ -676,7 +677,8 @@ int main(){
 
 		"\033[1;37m+4 \033[0m","\033[1;37m+4 \033[0m","\033[1;37m+4 \033[0m","\033[1;37m+4 \033[0m",
 		"\033[1;37mC  \033[0m","\033[1;37mC  \033[0m","\033[1;37mC  \033[0m","\033[1;37mC  \033[0m"
-
+	};
+	list <string> backup = {     
 		"\033[1;31m0  \033[0m","\033[1;31m0  \033[0m","\033[1;31m1  \033[0m","\033[1;31m1  \033[0m","\033[1;31m2  \033[0m","\033[1;31m2  \033[0m","\033[1;31m3  \033[0m","\033[1;31m3  \033[0m",
 		"\033[1;31m4  \033[0m","\033[1;31m4  \033[0m","\033[1;31m5  \033[0m","\033[1;31m5  \033[0m","\033[1;31m6  \033[0m","\033[1;31m6  \033[0m","\033[1;31m7  \033[0m","\033[1;31m7  \033[0m",
 		"\033[1;31m8  \033[0m","\033[1;31m8  \033[0m","\033[1;31m9  \033[0m","\033[1;31m9  \033[0m","\033[1;31m+2 \033[0m","\033[1;31m+2 \033[0m","\033[1;31mR  \033[0m","\033[1;31mR  \033[0m",
@@ -734,7 +736,11 @@ int main(){
 	int strand = rand() % cards.size();
 	list <string>::iterator it = cards.begin();
 	advance(it, strand);
-	while ((*it == "\033[1;31m+4 \033[0m") || (*it == "\033[1;31mC  \033[0m")){
+	while ((*it == "\033[1;37m+4 \033[0m") || (*it == "\033[1;37mC  \033[0m") || (*it == "\033[1;31m+2 \033[0m")
+	    || (*it == "\033[1;32m+2 \033[0m") || (*it == "\033[1;33m+2 \033[0m") || (*it == "\033[1;34m+2 \033[0m")
+		|| (*it == "\033[1;31mR  \033[0m") || (*it == "\033[1;32mR  \033[0m") || (*it == "\033[1;33mR  \033[0m")
+		|| (*it == "\033[1;34mR  \033[0m") || (*it == "\033[1;31mS  \033[0m") || (*it == "\033[1;32mS  \033[0m")
+		|| (*it == "\033[1;33mS  \033[0m") || (*it == "\033[1;34mS  \033[0m")){
 		int strand = rand() % cards.size();
 		list <string>::iterator it = cards.begin();
 		advance(it, strand);
@@ -759,6 +765,13 @@ int main(){
 				compplay(comp3, cnewcolor, top, reverse, order, cards, validation);	
 				break;
 		}
+
+		
+		if (cards.size() < 10){
+			cards.insert(cards.end(), backup.begin(), backup.end());
+		}
+		
+
 		table(top, hand, comp1, comp2, comp3, cards);
 		change(running, reverse, order, hand, comp1, comp2, comp3, cards);
 	}
