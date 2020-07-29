@@ -7,7 +7,9 @@ runs out of cards
 #include<vector>
 #include<iomanip>
 #include<unistd.h>
-#include<unordered_set>
+#include<unordered_set>    // std::cout, std::endl
+#include <thread>         // std::this_thread::sleep_for
+#include <chrono>         // std::chrono::seconds
 
 using namespace std;
 
@@ -350,25 +352,29 @@ void table(string top, list <string> hand, list <string> comp1, list <string> co
 	//system("clear");
 	cout << "Play Pile: " << top << endl << endl;
 
+	//cout << endl;
 	cout << "Player 2 hand: " << comp1.size() << endl;
-	
+	/*
 	for(auto i : comp1){
 		cout << i;
 	}
-	
-	cout << endl << "Player 3 hand: " << comp2.size() << endl;
-	
+	cout << endl;
+	*/
+	cout << "Player 3 hand: " << comp2.size() << endl;
+	/*
 	for(auto i : comp2){
 		cout << i;
 	}
-	
-	cout << endl << "Player 4 hand: " << comp3.size() << endl;
-	
+	cout << endl;
+	*/
+	cout << "Player 4 hand: " << comp3.size() << endl;
+	/*
 	for(auto i : comp3){
 		cout << i;
 	}
-	
+	cout << endl;
 	cout << endl << "Deck size: " << cards.size() << endl;
+	*/
 	cout << endl;
 
 	cout << "Your hand: ";
@@ -771,7 +777,7 @@ int main(){
 			cards.insert(cards.end(), backup.begin(), backup.end());
 		}
 		
-
+		sleep(3);
 		table(top, hand, comp1, comp2, comp3, cards);
 		change(running, reverse, order, hand, comp1, comp2, comp3, cards);
 	}
