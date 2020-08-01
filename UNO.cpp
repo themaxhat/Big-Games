@@ -1,15 +1,10 @@
-/*
-runs out of cards
-*/
 #include<list>
 #include<iostream>
 #include<stdlib.h>
 #include<vector>
 #include<iomanip>
 #include<unistd.h>
-#include<unordered_set>    // std::cout, std::endl
-#include <thread>         // std::this_thread::sleep_for
-#include <chrono>         // std::chrono::seconds
+#include<unordered_set>    
 
 using namespace std;
 
