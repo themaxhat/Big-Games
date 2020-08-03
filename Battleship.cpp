@@ -34,7 +34,7 @@ int main(){
                 compsea [i][j] = '_';
             }
         }
-    int ships1 = 2;
+    int ships1 = 1;
     int compships = 10;
     int turn = 1;
     int length1;
@@ -42,7 +42,6 @@ int main(){
     int up1;
     int compup;
     int acrossnum1;
-    int compnum;
     int ship1_6 = 1;
     int ship1_4 = 2;
     int ship1_3 = 3;
@@ -66,9 +65,11 @@ int main(){
 
     while (turn == 1){
         cout << "You have " << ships1 << " ships left to place \nWhat letter across do you want to use?\n";
-        cin >> across1;
+        //cin >> across1;
+        across1 = 'A';
         cout << "What number up do you want to use?\n";
-        cin >> up1;
+        //cin >> up1;
+        up1 = 1;
         switch (across1){
             case 'A':
                 acrossnum1 = 0;
@@ -137,7 +138,8 @@ int main(){
 
         cout << "There are " << ship1_6 << " ships with a length of 6, " << ship1_4 << " ships with a length of four, " << ship1_3 << " ships with a length of three, and " << ship1_2 << " ships with a length of 2\n";
         cout << "What is the length of the ship you want to use?\n";
-        cin >> length1;
+        //cin >> length1;
+        length1 = 2;
         while (((length1 == 6) && (ship1_6 == 0)) || ((length1 == 4) && (ship1_4 == 0)) || ((length1 == 3) && (ship1_3 == 0)) || ((length1 == 2) && (ship1_2 == 0))){
             cout << "You don't have any of those ships\npick another one\n";
             cin >> length1;
@@ -161,7 +163,8 @@ int main(){
                 break;
         }
         cout << "What direction do you want that ship to go?\n";
-        cin >> direction1;
+        //cin >> direction1;
+        direction1 = "right";
         while ((direction1 != "up") && (direction1 != "down") && (direction1 != "left") && (direction1 != "right")){
             cout << "that's not a direction\nup, down, left, or right";
             cin >> direction1;
@@ -281,7 +284,7 @@ int main(){
         compacross = rand() % 10;
         compup = rand() % 10;
   
-        compsea [compnum][compup] = 'O';
+        compsea [compacross][compup] = 'O';
         board(sea1, compsea);
 
         complength = rand() % 6 + 1;
@@ -305,109 +308,110 @@ int main(){
                 compship_2--;
                 break;
         }
-        cin >> compdirection;
+        compdirection = rand() % 4;
 
         //ship length 6
         if ((compdirection == 0) && (complength == 6)){
-            compsea [compnum][compup - 2] = 'O';
-            compsea [compnum][compup - 3] = 'O';
-            compsea [compnum][compup - 4] = 'O';
-            compsea [compnum][compup - 5] = 'O';
-            compsea [compnum][compup - 6] = 'O';
+            compsea [compacross][compup - 2] = 'O';
+            compsea [compacross][compup - 3] = 'O';
+            compsea [compacross][compup - 4] = 'O';
+            compsea [compacross][compup - 5] = 'O';
+            compsea [compacross][compup - 6] = 'O';
             board(sea1, compsea);
         }
         if ((compdirection == 1) && (complength == 6)){
-            compsea [compnum][compup] = 'O';
-            compsea [compnum][compup + 1] = 'O';
-            compsea [compnum][compup + 2] = 'O';
-            compsea [compnum][compup + 3] = 'O';
-            compsea [compnum][compup + 4] = 'O';
+            compsea [compacross][compup] = 'O';
+            compsea [compacross][compup + 1] = 'O';
+            compsea [compacross][compup + 2] = 'O';
+            compsea [compacross][compup + 3] = 'O';
+            compsea [compacross][compup + 4] = 'O';
             board(sea1, compsea);
         }
         if ((compdirection == 2) && (complength == 6)){
-            compsea [compnum - 1][compup] = 'O';
-            compsea [compnum - 2][compup] = 'O';
-            compsea [compnum - 3][compup] = 'O';
-            compsea [compnum - 4][compup] = 'O';
-            compsea [compnum - 5][compup] = 'O';
+            compsea [compacross - 1][compup] = 'O';
+            compsea [compacross - 2][compup] = 'O';
+            compsea [compacross - 3][compup] = 'O';
+            compsea [compacross - 4][compup] = 'O';
+            compsea [compacross - 5][compup] = 'O';
             board(sea1, compsea);
         }
         if ((compdirection == 3) && (complength == 6)){
-            compsea [compnum + 1][compup] = 'O';
-            compsea [compnum + 2][compup] = 'O';
-            compsea [compnum + 3][compup] = 'O';
-            compsea [compnum + 4][compup] = 'O';
-            compsea [compnum + 5][compup] = 'O';
+            compsea [compacross + 1][compup] = 'O';
+            compsea [compacross + 2][compup] = 'O';
+            compsea [compacross + 3][compup] = 'O';
+            compsea [compacross + 4][compup] = 'O';
+            compsea [compacross + 5][compup] = 'O';
             board(sea1, compsea);
         }
 
         //ship length 4
         if ((compdirection == 0) && (complength == 4)){
-            compsea [compnum][compup - 2] = 'O';
-            compsea [compnum][compup - 3] = 'O';
-            compsea [compnum][compup - 4] = 'O';
+            compsea [compacross][compup - 2] = 'O';
+            compsea [compacross][compup - 3] = 'O';
+            compsea [compacross][compup - 4] = 'O';
             board(sea1, compsea);
         }
         if ((compdirection == 1) && (complength == 4)){
-            compsea [compnum][compup] = 'O';
-            compsea [compnum][compup + 1] = 'O';
-            compsea [compnum][compup + 2] = 'O';
+            compsea [compacross][compup] = 'O';
+            compsea [compacross][compup + 1] = 'O';
+            compsea [compacross][compup + 2] = 'O';
             board(sea1, compsea);
         }
         if ((compdirection == 2) && (complength == 4)){
-            compsea [compnum - 1][compup] = 'O';
-            compsea [compnum - 2][compup] = 'O';
-            compsea [compnum - 3][compup] = 'O';
+            compsea [compacross - 1][compup] = 'O';
+            compsea [compacross - 2][compup] = 'O';
+            compsea [compacross - 3][compup] = 'O';
             board(sea1, compsea);
         }
         if ((compdirection == 3) && (complength == 4)){
-            compsea [compnum + 1][compup] = 'O';
-            compsea [compnum + 2][compup] = 'O';
-            compsea [compnum + 3][compup] = 'O';
+            compsea [compacross + 1][compup] = 'O';
+            compsea [compacross + 2][compup] = 'O';
+            compsea [compacross + 3][compup] = 'O';
             board(sea1, compsea);
         }
 
         //ship length 3
         if ((compdirection == 0) && (complength == 3)){
-            compsea [compnum][compup - 1] = 'O';
-            compsea [compnum][compup - 2] = 'O';
+            compsea [compacross][compup - 1] = 'O';
+            compsea [compacross][compup - 2] = 'O';
             board(sea1, compsea);
         }
         if ((compdirection == 1) && (complength == 3)){
-            compsea [compnum][compup] = 'O';
-            compsea [compnum][compup + 1] = 'O';
+            compsea [compacross][compup] = 'O';
+            compsea [compacross][compup + 1] = 'O';
             board(sea1, compsea);
         }
         if ((compdirection == 2) && (complength == 3)){
-            compsea [compnum - 1][compup] = 'O';
-            compsea [compnum - 2][compup] = 'O';
+            compsea [compacross - 1][compup] = 'O';
+            compsea [compacross - 2][compup] = 'O';
             board(sea1, compsea);
         }
         if ((compdirection == 3) && (complength == 3)){
-            compsea [compnum + 1][compup] = 'O';
-            compsea [compnum + 2][compup] = 'O';
+            compsea [compacross + 1][compup] = 'O';
+            compsea [compacross + 2][compup] = 'O';
             board(sea1, compsea);
         }
 
         //ship length 2
         if ((compdirection == 0) && (complength == 2)){
-            compsea [compnum][compup - 2] = 'O';
+            compsea [compacross][compup - 2] = 'O';
             board(sea1, compsea);
         }
         if ((compdirection == 1) && (complength == 2)){
-            compsea [compnum][compup] = 'O';
+            compsea [compacross][compup] = 'O';
             board(sea1, compsea);
         }
         if ((compdirection == 2) && (complength == 2)){
-            compsea [compnum - 1][compup] = 'O';
+            compsea [compacross - 1][compup] = 'O';
             board(sea1, compsea);
         }
         if ((compdirection == 3) && (complength == 2)){
-            compsea [compnum + 1][compup] = 'O';
+            compsea [compacross + 1][compup] = 'O';
             board(sea1, compsea);
         }
 
         compships--;
+
         if (compships <= 0){
             break;
         }
