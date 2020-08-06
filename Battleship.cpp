@@ -3,12 +3,36 @@
 
 using namespace std;
 
-void board(string sea1[][10], char compsea[][10], string seensea[][10]){
+void winning_stuff(bool &over, string sea1[][10], string compsea[][10]){
+    for (int k = 0; k < 10; k++){
+        for (int l = 0; l < 10; l++){
+            if (sea1[k][l] == "O"){
+                over = false;
+            }
+            else {
+                over = true;
+            }
+        }
+    }
+    for (int m = 0; m < 10; m++){
+        for (int n = 0; n < 10; n++){
+            if (compsea[m][n] == "O"){
+                over = false;
+            }
+            else {
+                over == true;
+            }
+        }
+    }
+}
+
+void board(string sea1[][10], string compsea[][10], string seensea[][10]){
     cout << "      Player 1 board:              Player 2 board:" << endl;
     cout << "    \033[4mA\033[0m \033[4mB\033[0m \033[4mC\033[0m \033[4mD\033[0m \033[4mE\033[0m ";
     cout << "\033[4mF\033[0m \033[4mG\033[0m \033[4mH\033[0m \033[4mI\033[0m \033[4mJ\033[0m ";
     cout << "         \033[4mA\033[0m \033[4mB\033[0m \033[4mC\033[0m \033[4mD\033[0m \033[4mE\033[0m ";
     cout << "\033[4mF\033[0m \033[4mG\033[0m \033[4mH\033[0m \033[4mI\033[0m \033[4mJ\033[0m "<< endl;
+    /*
     cout << " 1 |" << sea1[0][0]<< "|" << sea1[1][0]<< "|" << sea1[2][0]<< "|" << sea1[3][0]<< "|" << sea1[4][0]<< "|" << sea1[5][0]<< "|" << sea1[6][0]<< "|" << sea1[7][0]<< "|" << sea1[8][0]<< "|" << sea1[9][0]<< "|      1 |" << compsea[0][0]<< "|" << compsea[1][0]<< "|" << compsea[2][0]<< "|" << compsea[3][0]<< "|" << compsea[4][0]<< "|" << compsea[5][0]<< "|" << compsea[6][0]<< "|" << compsea[7][0]<< "|" << compsea[8][0]<< "|" << compsea[9][0]<< "|" << endl;
     cout << " 2 |" << sea1[0][1]<< "|" << sea1[1][1]<< "|" << sea1[2][1]<< "|" << sea1[3][1]<< "|" << sea1[4][1]<< "|" << sea1[5][1]<< "|" << sea1[6][1]<< "|" << sea1[7][1]<< "|" << sea1[8][1]<< "|" << sea1[9][1]<< "|      2 |" << compsea[0][1]<< "|" << compsea[1][1]<< "|" << compsea[2][1]<< "|" << compsea[3][1]<< "|" << compsea[4][1]<< "|" << compsea[5][1]<< "|" << compsea[6][1]<< "|" << compsea[7][1]<< "|" << compsea[8][1]<< "|" << compsea[9][1]<< "|" << endl;
     cout << " 3 |" << sea1[0][2]<< "|" << sea1[1][2]<< "|" << sea1[2][2]<< "|" << sea1[3][2]<< "|" << sea1[4][2]<< "|" << sea1[5][2]<< "|" << sea1[6][2]<< "|" << sea1[7][2]<< "|" << sea1[8][2]<< "|" << sea1[9][2]<< "|      3 |" << compsea[0][2]<< "|" << compsea[1][2]<< "|" << compsea[2][2]<< "|" << compsea[3][2]<< "|" << compsea[4][2]<< "|" << compsea[5][2]<< "|" << compsea[6][2]<< "|" << compsea[7][2]<< "|" << compsea[8][2]<< "|" << compsea[9][2]<< "|" << endl;
@@ -21,7 +45,7 @@ void board(string sea1[][10], char compsea[][10], string seensea[][10]){
     cout << "10 |" << sea1[0][9]<< "|" << sea1[1][9]<< "|" << sea1[2][9]<< "|" << sea1[3][9]<< "|" << sea1[4][9]<< "|" << sea1[5][9]<< "|" << sea1[6][9]<< "|" << sea1[7][9]<< "|" << sea1[8][9]<< "|" << sea1[9][9]<< "|     10 |" << compsea[0][9]<< "|" << compsea[1][9]<< "|" << compsea[2][9]<< "|" << compsea[3][9]<< "|" << compsea[4][9]<< "|" << compsea[5][9]<< "|" << compsea[6][9]<< "|" << compsea[7][9]<< "|" << compsea[8][9]<< "|" << compsea[9][9]<< "|" << endl;
 
     cout << endl;
-
+    */
     cout << " 1 |" << sea1[0][0]<< "|" << sea1[1][0]<< "|" << sea1[2][0]<< "|" << sea1[3][0]<< "|" << sea1[4][0]<< "|" << sea1[5][0]<< "|" << sea1[6][0]<< "|" << sea1[7][0]<< "|" << sea1[8][0]<< "|" << sea1[9][0]<< "|      1 |" << seensea[0][0]<< "|" << seensea[1][0]<< "|" << seensea[2][0]<< "|" << seensea[3][0]<< "|" << seensea[4][0]<< "|" << seensea[5][0]<< "|" << seensea[6][0]<< "|" << seensea[7][0]<< "|" << seensea[8][0]<< "|" << seensea[9][0]<< "|" << endl;
     cout << " 2 |" << sea1[0][1]<< "|" << sea1[1][1]<< "|" << sea1[2][1]<< "|" << sea1[3][1]<< "|" << sea1[4][1]<< "|" << sea1[5][1]<< "|" << sea1[6][1]<< "|" << sea1[7][1]<< "|" << sea1[8][1]<< "|" << sea1[9][1]<< "|      2 |" << seensea[0][1]<< "|" << seensea[1][1]<< "|" << seensea[2][1]<< "|" << seensea[3][1]<< "|" << seensea[4][1]<< "|" << seensea[5][1]<< "|" << seensea[6][1]<< "|" << seensea[7][1]<< "|" << seensea[8][1]<< "|" << seensea[9][1]<< "|" << endl;
     cout << " 3 |" << sea1[0][2]<< "|" << sea1[1][2]<< "|" << sea1[2][2]<< "|" << sea1[3][2]<< "|" << sea1[4][2]<< "|" << sea1[5][2]<< "|" << sea1[6][2]<< "|" << sea1[7][2]<< "|" << sea1[8][2]<< "|" << sea1[9][2]<< "|      3 |" << seensea[0][2]<< "|" << seensea[1][2]<< "|" << seensea[2][2]<< "|" << seensea[3][2]<< "|" << seensea[4][2]<< "|" << seensea[5][2]<< "|" << seensea[6][2]<< "|" << seensea[7][2]<< "|" << seensea[8][2]<< "|" << seensea[9][2]<< "|" << endl;
@@ -42,10 +66,10 @@ int main(){
                 sea1 [i][j] = "_";
             }
         }
-    char compsea[10][10] = {};
+    string compsea[10][10] = {};
         for (int i = 0; i < 10; i++){
             for (int j = 0; j < 10; j++){
-                compsea [i][j] = '_';
+                compsea [i][j] = "_";
             }
         }
     string seensea[10][10] = {};
@@ -67,7 +91,7 @@ int main(){
             }
         }
 
-    int ships1 = 1;
+    int ships1 = 10;
     int compships = 10;
     int turn = 1;
     int length1;
@@ -106,12 +130,13 @@ int main(){
     //Placing Boats
     while (turn == 1){
 
+/*
         cout << "You have " << ships1 << " ships left to place \nWhat letter across do you want to use?\n";
-        //cin >> across1;
-        across1 = 'c';
+        cin >> across1;
+        //across1 = 'c';
         cout << "What number up do you want to use?\n";
-        //cin >> up1;
-        up1 = 5;
+        cin >> up1;
+        //up1 = 5;
         switch (across1){
             case 'A':
                 acrossnum1 = 0;
@@ -174,21 +199,35 @@ int main(){
                 acrossnum1 = 9;
                 break;   
         }
-        
+  */
+
+        srand (time(NULL));
+        int acrossnum1 = rand() % 10;
+        int up1 = rand() % 10;
+  
+        while (taken1[acrossnum1][up1] == true){
+            srand (time(NULL));
+            acrossnum1 = rand() % 10 + 1;
+            up1 = rand() % 10 + 1;
+        }
+
         sea1 [acrossnum1][up1 - 1] = 'O';
+        taken1 [acrossnum1][up1 - 1] = true;
         board(sea1, compsea, seensea);
 
         cout << "There are " << ship1_6 << " ships with a length of 6, " << ship1_4 << " ships with a length of four, " << ship1_3 << " ships with a length of three, and " << ship1_2 << " ships with a length of 2\n";
         cout << "What is the length of the ship you want to use?\n";
         //cin >> length1;
-        length1 = 6;
+        length1 = rand() % 6 + 1;
         while (((length1 == 6) && (ship1_6 == 0)) || ((length1 == 4) && (ship1_4 == 0)) || ((length1 == 3) && (ship1_3 == 0)) || ((length1 == 2) && (ship1_2 == 0))){
             cout << "You don't have any of those ships\npick another one\n";
-            cin >> length1;
+            //cin >> length1;
+            length1 = rand() % 6 + 1;
         }
         while ((length1 != 6) && (length1 != 4) && (length1 != 3) && (length1 != 2)){
             cout << "*invalid length*\nPlease enter a valid length\n";
-            cin >> length1;
+            //cin >> length1;
+            length1 = rand() % 6 + 1;
         }
         switch (length1){
             case 6:
@@ -357,6 +396,12 @@ int main(){
             board(sea1, compsea, seensea);
         }
 
+        cout << endl;
+        cout << "Coordinates: (" << acrossnum1 + 1 << ", " << up1 << ")" << endl;
+        cout << "Ship Length: " << length1 << endl;
+        cout << "Direction: " << direction1 << endl << endl;
+
+
         ships1--;
 
         if (ships1 <= 0){
@@ -378,7 +423,6 @@ int main(){
             compup = rand() % 9;
         }
 
-        compsea [compacross][compup] = 'O';
         comptaken [compacross][compup] = true;
         board(sea1, compsea, seensea);
 
@@ -407,11 +451,17 @@ int main(){
 
         //ship length 6
         if ((compdirection == 0) && (complength == 6)){
-            compsea [compacross][compup - 1] = 'O';
-            compsea [compacross][compup - 2] = 'O';
-            compsea [compacross][compup - 3] = 'O';
-            compsea [compacross][compup - 4] = 'O';
-            compsea [compacross][compup - 5] = 'O';
+            while ((compup - 1 < 0) || (compup - 2 < 0) || (compup - 3 < 0) || (compup - 4 < 0) || (compup - 5 < 0)){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+
+            compsea [compacross][compup] = "O";
+            compsea [compacross][compup - 1] = "O";
+            compsea [compacross][compup - 2] = "O";
+            compsea [compacross][compup - 3] = "O";
+            compsea [compacross][compup - 4] = "O";
+            compsea [compacross][compup - 5] = "O";
             comptaken [compacross][compup - 1] = true;
             comptaken [compacross][compup - 2] = true;
             comptaken [compacross][compup - 3] = true;
@@ -420,11 +470,17 @@ int main(){
             board(sea1, compsea, seensea);
         }
         if ((compdirection == 1) && (complength == 6)){
-            compsea [compacross][compup + 1] = 'O';
-            compsea [compacross][compup + 2] = 'O';
-            compsea [compacross][compup + 3] = 'O';
-            compsea [compacross][compup + 4] = 'O';
-            compsea [compacross][compup + 5] = 'O';
+            while ((compup + 1 > 9) || (compup + 2 > 9) || (compup + 3 > 9) || (compup + 4 > 9) || (compup + 5 > 9)){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+            
+            compsea [compacross][compup] = "O";
+            compsea [compacross][compup + 1] = "O";
+            compsea [compacross][compup + 2] = "O";
+            compsea [compacross][compup + 3] = "O";
+            compsea [compacross][compup + 4] = "O";
+            compsea [compacross][compup + 5] = "O";
             comptaken [compacross][compup + 1] = true;
             comptaken [compacross][compup + 2] = true;
             comptaken [compacross][compup + 3] = true;
@@ -433,11 +489,17 @@ int main(){
             board(sea1, compsea, seensea);
         }
         if ((compdirection == 2) && (complength == 6)){
-            compsea [compacross - 1][compup] = 'O';
-            compsea [compacross - 2][compup] = 'O';
-            compsea [compacross - 3][compup] = 'O';
-            compsea [compacross - 4][compup] = 'O';
-            compsea [compacross - 5][compup] = 'O';
+            while ((compacross - 1 < 0) || (compacross - 2 < 0) || (compacross - 3 < 0) || (compacross - 4 < 0) || (compacross - 5 < 0)){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+            
+            compsea [compacross][compup] = "O";
+            compsea [compacross - 1][compup] = "O";
+            compsea [compacross - 2][compup] = "O";
+            compsea [compacross - 3][compup] = "O";
+            compsea [compacross - 4][compup] = "O";
+            compsea [compacross - 5][compup] = "O";
             comptaken [compacross - 1][compup] = true;
             comptaken [compacross - 2][compup] = true;
             comptaken [compacross - 3][compup] = true;
@@ -446,11 +508,17 @@ int main(){
             board(sea1, compsea, seensea);
         }
         if ((compdirection == 3) && (complength == 6)){
-            compsea [compacross + 1][compup] = 'O';
-            compsea [compacross + 2][compup] = 'O';
-            compsea [compacross + 3][compup] = 'O';
-            compsea [compacross + 4][compup] = 'O';
-            compsea [compacross + 5][compup] = 'O';
+            while ((compacross + 1 > 9) || (compacross + 2 > 9) || (compacross + 3 > 9) || (compacross + 4 > 9) || (compacross + 5 > 9)){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+            
+            compsea [compacross][compup] = "O";
+            compsea [compacross + 1][compup] = "O";
+            compsea [compacross + 2][compup] = "O";
+            compsea [compacross + 3][compup] = "O";
+            compsea [compacross + 4][compup] = "O";
+            compsea [compacross + 5][compup] = "O";
             comptaken [compacross + 1][compup] = true;
             comptaken [compacross + 2][compup] = true;
             comptaken [compacross + 3][compup] = true;
@@ -461,36 +529,60 @@ int main(){
 
         //ship length 4
         if ((compdirection == 0) && (complength == 4)){
-            compsea [compacross][compup - 1] = 'O';
-            compsea [compacross][compup - 2] = 'O';
-            compsea [compacross][compup - 3] = 'O';
+            while ((compup - 1 < 0) || (compup - 2 < 0) || (compup - 3 < 0)){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+            
+            compsea [compacross][compup] = "O";
+            compsea [compacross][compup - 1] = "O";
+            compsea [compacross][compup - 2] = "O";
+            compsea [compacross][compup - 3] = "O";
             comptaken [compacross][compup - 1] = true;
             comptaken [compacross][compup - 2] = true;
             comptaken [compacross][compup - 3] = true;
             board(sea1, compsea, seensea);
         }
         if ((compdirection == 1) && (complength == 4)){
-            compsea [compacross][compup + 1] = 'O';
-            compsea [compacross][compup + 2] = 'O';
-            compsea [compacross][compup + 3] = 'O';
+            while ((compup + 1 > 9) || (compup + 2 > 9) || (compup + 3 > 9)){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+
+            compsea [compacross][compup] = "O";
+            compsea [compacross][compup + 1] = "O";
+            compsea [compacross][compup + 2] = "O";
+            compsea [compacross][compup + 3] = "O";
             comptaken [compacross][compup + 1] = true;
             comptaken [compacross][compup + 2] = true;
             comptaken [compacross][compup + 3] = true;
             board(sea1, compsea, seensea);
         }
         if ((compdirection == 2) && (complength == 4)){
-            compsea [compacross - 1][compup] = 'O';
-            compsea [compacross - 2][compup] = 'O';
-            compsea [compacross - 3][compup] = 'O';
+            while ((compacross - 1 < 0) || (compacross - 2 < 0) || (compacross - 3 < 0)){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+
+            compsea [compacross][compup] = "O";
+            compsea [compacross - 1][compup] = "O";
+            compsea [compacross - 2][compup] = "O";
+            compsea [compacross - 3][compup] = "O";
             comptaken [compacross - 1][compup] = true;
             comptaken [compacross - 2][compup] = true;
             comptaken [compacross - 3][compup] = true;
             board(sea1, compsea, seensea);
         }
         if ((compdirection == 3) && (complength == 4)){
-            compsea [compacross + 1][compup] = 'O';
-            compsea [compacross + 2][compup] = 'O';
-            compsea [compacross + 3][compup] = 'O';
+            while ((compacross + 1 > 9) || (compacross + 2 > 9) || (compacross + 3 > 9)){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+            
+            compsea [compacross][compup] = "O";
+            compsea [compacross + 1][compup] = "O";
+            compsea [compacross + 2][compup] = "O";
+            compsea [compacross + 3][compup] = "O";
             comptaken [compacross + 1][compup] = true;
             comptaken [compacross + 2][compup] = true;
             comptaken [compacross + 3][compup] = true;
@@ -499,29 +591,53 @@ int main(){
 
         //ship length 3
         if ((compdirection == 0) && (complength == 3)){
-            compsea [compacross][compup - 1] = 'O';
-            compsea [compacross][compup - 2] = 'O';
+            while ((compup - 1 < 0) || (compup - 2 < 0)){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+            
+            compsea [compacross][compup] = "O";
+            compsea [compacross][compup - 1] = "O";
+            compsea [compacross][compup - 2] = "O";
             comptaken [compacross][compup - 1] = true;
             comptaken [compacross][compup - 2] = true;
             board(sea1, compsea, seensea);
         }
         if ((compdirection == 1) && (complength == 3)){
-            compsea [compacross][compup + 1] = 'O';
-            compsea [compacross][compup + 2] = 'O';
+            while ((compup + 1 > 9) || (compup + 2 > 9)){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+            
+            compsea [compacross][compup] = "O";
+            compsea [compacross][compup + 1] = "O";
+            compsea [compacross][compup + 2] = "O";
             comptaken [compacross][compup + 1] = true;
             comptaken [compacross][compup + 2] = true;
             board(sea1, compsea, seensea);
         }
         if ((compdirection == 2) && (complength == 3)){
-            compsea [compacross - 1][compup] = 'O';
-            compsea [compacross - 2][compup] = 'O';
+            while ((compacross - 1 < 0) || (compacross - 2 < 0)){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+            
+            compsea [compacross][compup] = "O";
+            compsea [compacross - 1][compup] = "O";
+            compsea [compacross - 2][compup] = "O";
             comptaken [compacross - 1][compup] = true;
             comptaken [compacross - 2][compup] = true;
             board(sea1, compsea, seensea);
         }
         if ((compdirection == 3) && (complength == 3)){
-            compsea [compacross + 1][compup] = 'O';
-            compsea [compacross + 2][compup] = 'O';
+            while ((compacross + 1 > 9) || (compup + 2 > 9)){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+            
+            compsea [compacross][compup] = "O";
+            compsea [compacross + 1][compup] = "O";
+            compsea [compacross + 2][compup] = "O";
             comptaken [compacross + 1][compup] = true;
             comptaken [compacross + 2][compup] = true;
             board(sea1, compsea, seensea);
@@ -529,32 +645,56 @@ int main(){
 
         //ship length 2
         if ((compdirection == 0) && (complength == 2)){
-            compsea [compacross][compup - 1] = 'O';
+            while (compup - 1 < 0){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+            
+            compsea [compacross][compup] = "O";
+            compsea [compacross][compup - 1] = "O";
             comptaken [compacross][compup - 1] = true;
             board(sea1, compsea, seensea);
         }
         if ((compdirection == 1) && (complength == 2)){
-            compsea [compacross][compup + 1] = 'O';
+            while (compup + 1 > 9){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+            
+            compsea [compacross][compup] = "O";
+            compsea [compacross][compup + 1] = "O";
             comptaken [compacross][compup + 1] = true;
             board(sea1, compsea, seensea);
         }
         if ((compdirection == 2) && (complength == 2)){
-            compsea [compacross - 1][compup] = 'O';
+            while (compacross - 1 < 0){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+            
+            compsea [compacross][compup] = "O";
+            compsea [compacross - 1][compup] = "O";
             comptaken [compacross - 1][compup] = true;
             board(sea1, compsea, seensea);
         }
         if ((compdirection == 3) && (complength == 2)){
-            compsea [compacross + 1][compup] = 'O';
+            while (compacross + 1 > 9){
+                compacross = rand() % 9;
+                compup = rand() % 9;
+            }
+            
+            compsea [compacross][compup] = "O";
+            compsea [compacross + 1][compup] = "O";
             comptaken [compacross + 1][compup] = true;
             board(sea1, compsea, seensea);
         }
 
-/*
+
         cout << endl;
         cout << "Coordinates: (" << compacross + 1 << ", " << compup + 1 << ")" << endl;
         cout << "Ship Length: " << complength << endl;
         cout << "Direction: " << compdirection << endl << endl;
-*/
+
 
         compships--;
 
@@ -563,7 +703,7 @@ int main(){
         }
     }
 
-    turn = 1;
+    turn = rand() % 2 + 1;
 
     //Attacking
     while (over == false){
@@ -636,30 +776,55 @@ int main(){
             cin >> up1;            
             if (comptaken[attack1][up1 - 1] == true){
                 seensea[attack1][up1 - 1] = "\033[1;31mX\033[0m";
+                compsea[attack1][up1 - 1] = "\033[1;31mX\033[0m";
             }
             else {
                 seensea[attack1][up1 - 1] = "X";
+                compsea[attack1][up1 - 1] = "X";
             }
 
             board(sea1, compsea, seensea);
             turn = 2;
         }
 
+        winning_stuff(over, sea1, compsea);
+        if (over == true){
+            system("clear");
+            board(sea1, compsea, seensea);
+            cout << endl << "You Win!\n";
+            break;
+        }
+
         if (turn == 2){
-            compattack = 3;
-            compupattack = 5;            
-            if (taken1[compattack][compupattack - 1] == true){
-                sea1[compattack][compupattack - 1] = "\033[1;31mX\033[0m";
+
+	    //for (){
+
+	        compattack = rand() % 10;
+	        compupattack = rand() % 10;
+	    //}
+
+	    if (taken1[compattack][compupattack] == true){
+                sea1[compattack][compupattack] = "\033[1;31mX\033[0m";
             }
             else {
-                sea1[compattack][compupattack - 1] = "X";
+                sea1[compattack][compupattack] = "X";
             }
 
             board(sea1, compsea, seensea);
             turn = 1;
         }
+
+        winning_stuff(over, sea1, compsea);
+        if (over == true){
+            system("clear");
+            board(sea1, compsea, seensea);
+            cout << endl << "You Lost!\n";
+            break;
+        }
     }
+    
     if (over == true){
-        cout << "game over!";
+        cout << "Game Over!\n";
     }
+
 }
