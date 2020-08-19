@@ -1,6 +1,3 @@
-/*
-runs out of cards
-*/
 #include<list>
 #include<iostream>
 #include<stdlib.h>
