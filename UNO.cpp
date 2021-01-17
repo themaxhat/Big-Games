@@ -259,7 +259,7 @@ void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, i
 				}
 			}
 
-			if (current_score > best_score){
+			if (current_score < best_score){
 				best_score = current_score;
 				best = it;
 				precise = true;
