@@ -376,7 +376,11 @@ void table(string top, list <string> hand, list <string> comp1, list <string> co
 	for(auto i : hand){
 		cout << i;
 	}
-	cout << endl << "           1  2  3  4  5  6  7  8  9  10 11 12 13 14 15" << endl;
+	cout << endl << "           ";//1  2  3  4  5  6  7  8  9  10 11 12 13 14 15" << endl;
+	for (int i = 1; i <= hand.size(); i++){
+		cout << i << "  ";
+	}
+	cout << endl;
 }
 
 void valid(string top, bool &validation, list <string>::iterator it){
