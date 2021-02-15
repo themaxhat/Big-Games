@@ -141,36 +141,35 @@ int main(){
 	for (int y = 9; y >= 0; y--){
 		for (int x = 0; x < 10; x++){
 			if (mines[x][y] == true){
-
-				if (mines[x - 1][y + 1] == false){
+				if ((mines[x - 1][y + 1] == false) && (x - 1 >= 0) && (y + 1 < 10)){
 					numbers[x - 1][y + 1] = numbers[x - 1][y + 1] + 1;
 				}	
 
-				if (mines[x][y + 1] == false){
+				if ((mines[x][y + 1] == false) && (y + 1 < 10)){
 					numbers[x][y + 1] = numbers[x][y + 1] + 1;
 				}
 
-				if (mines[x + 1][y + 1] == false){		
+				if ((mines[x + 1][y + 1] == false) && (x + 1 < 10) && (y + 1 < 10)){		
 					numbers[x + 1][y + 1] = numbers[x + 1][y + 1] + 1;
 				}	
 
-				if (mines[x + 1][y] == false){
+				if ((mines[x + 1][y] == false) && (x + 1 < 10)){
 					numbers[x + 1][y] = numbers[x + 1][y] + 1;
 				}
 
-				if (mines[x + 1][y - 1] == false){
+				if ((mines[x + 1][y - 1] == false) && (x + 1 < 10) && (y - 1 >= 0)){
 					numbers[x + 1][y - 1] = numbers[x + 1][y - 1] + 1;
 				}
 
-				if (mines[x][y - 1] == false){
+				if ((mines[x][y - 1] == false) && (y - 1 >= 0)){
 					numbers[x][y - 1] = numbers[x][y - 1] + 1;
 				}
 
-				if (mines[x - 1][y - 1] == false){
+				if ((mines[x - 1][y - 1] == false) && (x - 1 >= 0) && (y - 1 >= 0)){
 					numbers[x - 1][y - 1] = numbers[x - 1][y - 1] + 1;
 				}
 
-				if (mines[x - 1][y] == false){
+				if ((mines[x - 1][y] == false) && (x - 1 >= 0)){
 					numbers[x - 1][y] = numbers[x - 1][y] + 1;
 				}
 			}
