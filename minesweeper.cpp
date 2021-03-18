@@ -1,14 +1,15 @@
 #include <iostream>
 #include <stdlib.h>
 #include <vector>
-
+#include <iomanip> 
+#include <unistd.h> 
 
 //change these to change the size of the board 
 //and the number of mines
 
-#define xLength 10
-#define yLength 10
-#define minesNumber 10
+#define xLength 18
+#define yLength 14
+#define minesNumber 40
 
 using namespace std;
 
@@ -240,7 +241,7 @@ void underground(string boardNums[][xLength]){
 void land(int looseMines, string board[][xLength]){
 	system("clear");
 
-	cout << "            MINESWEEPER          " << endl;
+	cout << "    MINESWEEPER" << "    Flags Left: " << looseMines << endl;
 	for (int i = (yLength - 1); i >= 0; i--){
 		if (i < 10){
 			cout << i << "  ";
@@ -262,8 +263,9 @@ void land(int looseMines, string board[][xLength]){
 			cout << i << " ";
 		}
 	}
-	cout << endl;
-	cout << "Flags Left: " << looseMines << endl << endl;	
+	cout << endl << endl;
+	
+
 }
 
 //"digging" a spot (or flagging)
@@ -366,3 +368,5 @@ bool gameOver(bool flagged[][xLength], bool mines[][xLength], string board[][xLe
 		return false;
 	}
 }
+
+
