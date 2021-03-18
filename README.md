@@ -1,3 +1,3 @@
 # Minesweeper
 
-I am currentely making the classic game "Minesweeper", where the player has to find all the mines in an area!
+I made Minesweeper! A game where the player has to uncover all the mines in an area by flagging them.
