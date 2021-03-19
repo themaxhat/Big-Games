@@ -276,14 +276,14 @@ void dig (int &looseMines, int &hiddenLooseMines, bool &gameOn, string board[][x
 	
 	cout << "x coordinate: ";
 	cin >> yCor;
-	while (yCor > (yLength - 1) || yCor < 0){
+	while (yCor > (xLength - 1) || yCor < 0){
 		cout << "That's not on the graph, try again. ";
 		cin >> yCor;
 		cout << endl;
 	}
 	cout << "y coordinate: ";
 	cin >> xCor;
-	while (xCor > (xLength - 1) || xCor < 0){
+	while (xCor > (yLength - 1) || xCor < 0){
 		cout << "That's not on the graph, try again. ";
 		cin >> xCor;
 		cout << endl;
