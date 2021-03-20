@@ -9,7 +9,7 @@
 
 #define xLength 18
 #define yLength 14
-#define minesNumber 40
+#define minesNumber 20
 
 using namespace std;
 
@@ -139,6 +139,9 @@ int main(){
 
 //Clearing a whole section of blank spots when just one blank is dug
 void clearSection (int xCor, int yCor, string board[][xLength], string boardNums[][xLength], bool mines[][xLength], bool seen[yLength][xLength]){
+
+	land(99, board);
+	usleep(10000);
 
 	if (boardNums[xCor][yCor] == "   "){
 		board[xCor][yCor] = boardNums[xCor][yCor];
