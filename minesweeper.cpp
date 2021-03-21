@@ -9,7 +9,7 @@
 
 #define xLength 18
 #define yLength 14
-#define minesNumber 20
+#define minesNumber 40
 
 using namespace std;
 
@@ -23,17 +23,16 @@ void clearSection (int xCor, int yCor, string board[][xLength], string boardNums
 void underground(string boardNums[][xLength]);
 void land(int looseMines, string board[][xLength]);
 void dig (int &looseMines, int &hiddenLooseMines, bool &game, string board[][xLength], bool flagged[][xLength], bool mines[][xLength], string boardNums[][xLength], bool seen[][xLength]);
+void plant(bool mines[][xLength], string boardNums[][xLength]);
 bool gameOver(bool flagged[][xLength], bool mines[][xLength], string board[][xLength]);
 
+
 int main(){
-	int randX;
-	int randY;
+
 	int looseMines = minesNumber;
 	int hiddenLooseMines = looseMines;
 	
 	bool gameOn = true;
-
-	int numbers[yLength][xLength] = {};
 	
 	string board[yLength][xLength] = {};
 	string boardNums[yLength][xLength] = {};
@@ -48,84 +47,11 @@ int main(){
 		for (int h = 0; h < xLength; h++){
 			board[g][h] = " - ";
 			boardNums[g][h] = "   ";
-			numbers[g][h] = 0;
 			seen[g][h] = false;
 		}
 	}
 
-	//Plant the mines
-	for (int i = 0; i < minesNumber; i++){
-		randX = rand() % yLength;
-		randY = rand() % xLength;
-
-		while (mines[randX][randY] == true){
-			randX = rand() % yLength;
-			randX = rand() % xLength;
-		}
-
-		mines[randX][randY] = true;
-	}
-
-	//Create the Numbers
-	for (int y = xLength - 1; y >= 0; y--){
-		for (int x = 0; x < yLength; x++){
-			if (mines[x][y] == true){
-				if ((mines[x - 1][y + 1] == false) && (x - 1 >= 0) && (y + 1 < xLength)){
-					numbers[x - 1][y + 1] = numbers[x - 1][y + 1] + 1;
-				}	
-
-				if ((mines[x][y + 1] == false) && (y + 1 < xLength)){
-					numbers[x][y + 1] = numbers[x][y + 1] + 1;
-				}
-
-				if ((mines[x + 1][y + 1] == false) && (x + 1 < yLength) && (y + 1 < xLength)){		
-					numbers[x + 1][y + 1] = numbers[x + 1][y + 1] + 1;
-				}	
-
-				if ((mines[x + 1][y] == false) && (x + 1 < yLength)){
-					numbers[x + 1][y] = numbers[x + 1][y] + 1;
-				}
-
-				if ((mines[x + 1][y - 1] == false) && (x + 1 < yLength) && (y - 1 >= 0)){
-					numbers[x + 1][y - 1] = numbers[x + 1][y - 1] + 1;
-				}
-
-				if ((mines[x][y - 1] == false) && (y - 1 >= 0)){
-					numbers[x][y - 1] = numbers[x][y - 1] + 1;
-				}
-
-				if ((mines[x - 1][y - 1] == false) && (x - 1 >= 0) && (y - 1 >= 0)){
-					numbers[x - 1][y - 1] = numbers[x - 1][y - 1] + 1;
-				}
-
-				if ((mines[x - 1][y] == false) && (x - 1 >= 0)){
-					numbers[x - 1][y] = numbers[x - 1][y] + 1;
-				}
-			}
-		}
-	}
-	
-	//Give the numbers to show on the board
-	for (int y = xLength - 1; y >= 0; y--){
-		for (int x = 0; x < yLength; x++){
-			if ((numbers[x][y] == 0) && (mines[x][y] == false)){
-				boardNums[x][y] = "   ";
-			}
-			else {
-				boardNums[x][y] = " " + to_string(numbers[x][y]) + " ";
-			}
-		}
-	}
-
-	//Show where the mines are (Control)
-	for (int y = xLength - 1; y >= 0; y--){
-		for (int x = 0; x < yLength; x++){
-			if (mines[x][y] == true){
-				//board[x][y] = " \033[1;31m-\033[0m ";
-				boardNums[x][y] = " \033[31m*\033[0m ";
-			}
-		}
-	}
+	plant(mines, boardNums);
 
 	while (gameOver(flagged, mines, board) == false && gameOn == true){		
 		land(looseMines, board);
@@ -140,8 +66,8 @@ int main(){
 //Clearing a whole section of blank spots when just one blank is dug
 void clearSection (int xCor, int yCor, string board[][xLength], string boardNums[][xLength], bool mines[][xLength], bool seen[yLength][xLength]){
 
-	land(99, board);
-	usleep(10000);
+	//land(minesNumber, board);
+	//usleep(1000);
 
 	if (boardNums[xCor][yCor] == "   "){
 		board[xCor][yCor] = boardNums[xCor][yCor];
@@ -276,6 +202,7 @@ void dig (int &looseMines, int &hiddenLooseMines, bool &gameOn, string board[][x
 	int xCor;
 	int yCor;
 	string digOrFlag;
+	int numOfMoves = 0;
 	
 	cout << "x coordinate: ";
 	cin >> yCor;
@@ -300,6 +227,13 @@ void dig (int &looseMines, int &hiddenLooseMines, bool &gameOn, string board[][x
 		cout << endl << "Not gonna work. Try again" << endl;
 
 		dig(looseMines, hiddenLooseMines, gameOn, board, flagged, mines, boardNums, seen);
+	}
+
+	if (numOfMoves == 0){
+		while (boardNums[xCor][yCor] != "   "){
+			plant(mines, boardNums);
+		}
+		numOfMoves++;
 	}
 
 	//uncovering a spot
@@ -349,6 +283,93 @@ void dig (int &looseMines, int &hiddenLooseMines, bool &gameOn, string board[][x
 	}
 }
 
+//plant mines and give numbers
+void plant (bool mines[][xLength], string boardNums[][xLength]){
+	int numbers[yLength][xLength] = {};
+	int randX;
+	int randY;
+
+	for (int i = 0; i < yLength; i++){
+		for (int j = 0; j < xLength; j++){
+			mines[i][j] = false;
+			numbers[i][j] = 0;
+		}
+	}
+
+	//Plant the mines
+	for (int i = 0; i < minesNumber; i++){
+		randX = rand() % yLength;
+		randY = rand() % xLength;
+
+		while (mines[randX][randY] == true){
+			randX = rand() % yLength;
+			randX = rand() % xLength;
+		}
+
+		mines[randX][randY] = true;
+	}
+
+	//Create the Numbers
+	for (int y = xLength - 1; y >= 0; y--){
+		for (int x = 0; x < yLength; x++){
+			if (mines[x][y] == true){
+				if ((mines[x - 1][y + 1] == false) && (x - 1 >= 0) && (y + 1 < xLength)){
+					numbers[x - 1][y + 1]++;
+				}	
+
+				if ((mines[x][y + 1] == false) && (y + 1 < xLength)){
+					numbers[x][y + 1]++;
+				}
+
+				if ((mines[x + 1][y + 1] == false) && (x + 1 < yLength) && (y + 1 < xLength)){		
+					numbers[x + 1][y + 1]++;
+				}	
+
+				if ((mines[x + 1][y] == false) && (x + 1 < yLength)){
+					numbers[x + 1][y]++;
+				}
+
+				if ((mines[x + 1][y - 1] == false) && (x + 1 < yLength) && (y - 1 >= 0)){
+					numbers[x + 1][y - 1]++;
+				}
+
+				if ((mines[x][y - 1] == false) && (y - 1 >= 0)){
+					numbers[x][y - 1]++;
+				}
+
+				if ((mines[x - 1][y - 1] == false) && (x - 1 >= 0) && (y - 1 >= 0)){
+					numbers[x - 1][y - 1]++;
+				}
+
+				if ((mines[x - 1][y] == false) && (x - 1 >= 0)){
+					numbers[x - 1][y]++;
+				}
+			}
+		}
+	}
+
+	//Give the numbers to show on the board
+	for (int y = xLength - 1; y >= 0; y--){
+		for (int x = 0; x < yLength; x++){
+			if ((numbers[x][y] == 0) && (mines[x][y] == false)){
+				boardNums[x][y] = "   ";
+			}
+			else {
+				boardNums[x][y] = " " + to_string(numbers[x][y]) + " ";
+			}
+		}
+	}
+
+	//Show where the mines are in boardNums
+	for (int y = xLength - 1; y >= 0; y--){
+		for (int x = 0; x < yLength; x++){
+			if (mines[x][y] == true){
+				boardNums[x][y] = " \033[31m*\033[0m ";
+			}
+		}
+	}
+}
+
 //see if the game is over
 bool gameOver(bool flagged[][xLength], bool mines[][xLength], string board[][xLength]){
 	int minesLeft = minesNumber;
@@ -371,5 +392,3 @@ bool gameOver(bool flagged[][xLength], bool mines[][xLength], string board[][xLe
 		return false;
 	}
 }
-
-
