@@ -16,6 +16,7 @@ void powers(int &order, bool &reverse, string top);
 void table(string top, list <string> hand, list <string> comp1, list <string> comp2, list <string> comp3, list <string> cards);
 bool validnum(string top, bool &validation, list <string>::iterator it);
 void valid(string top, bool &validation, list <string>::iterator it);
+void compMessage(string computer, string top);
 
 int main(){
 	list <string> cards = {     
@@ -109,21 +110,28 @@ int main(){
 	top = *it;
 	cards.erase(it);
 
+	//table(top, hand, comp1, comp2, comp3, cards);
 	// play game
 	while (running == true) {
 		switch(order) {
 			case 1:
-				humplay(hand, top, validation, reverse, order, comp1, comp2, comp3, cards);
 				table(top, hand, comp1, comp2, comp3, cards);
+				humplay(hand, top, validation, reverse, order, comp1, comp2, comp3, cards);
 				break;
 			case 2:
 				compplay(comp1, cnewcolor, top, reverse, order, cards, validation);
+				//sleep(2);
+				compMessage("Player 2", top);
 				break;
 			case 3:
 				compplay(comp2, cnewcolor, top, reverse, order, cards, validation);	
+				//sleep(2);
+				compMessage("Player 3", top);
 				break;
 			case 4:
 				compplay(comp3, cnewcolor, top, reverse, order, cards, validation);	
+				//sleep(2);
+				compMessage("Player 4", top);
 				break;
 		}
 
@@ -132,8 +140,9 @@ int main(){
 			cards.insert(cards.end(), backup.begin(), backup.end());
 		}
 		
-		sleep(3);
-		table(top, hand, comp1, comp2, comp3, cards);
+		//sleep(3);
+		//system("clear");
+		//table(top, hand, comp1, comp2, comp3, cards);
 		change(running, reverse, order, hand, comp1, comp2, comp3, cards);
 	}
 
@@ -215,10 +224,10 @@ void humplay(list <string> &hand, string &top,bool &validation, bool &reverse, i
 		return;
 	}
 	
-	cout << "do you want to draw or play?\n";
+	cout << "do you want to draw or play? ";
 	cin >> choice;
 	while ((choice != "draw") && (choice != "play")){
-		cout << "*invalid*\ndo you want to draw or play?\n";
+		cout << "*invalid*\ndo you want to draw or play? ";
 		cin >> choice;
 	}
 	if (choice == "draw"){
@@ -385,7 +394,7 @@ void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, i
 				}
 			}
 
-			if (current_score < best_score){
+			if (current_score > best_score){
 				best_score = current_score;
 				best = it;
 				precise = true;
@@ -435,6 +444,8 @@ void compplay(list <string> &uter, int &cnewcolor, string &top, bool &reverse, i
 			top = "\033[1;33m+4 \033[0m";
 		}
 	}
+
+	//cout << "Computer played: " << top << endl;
 }
 
 void powers(int &order, bool &reverse, string top){
@@ -785,3 +796,6 @@ void valid(string top, bool &validation, list <string>::iterator it){
 
 }
 
+void compMessage(string computer, string top){
+	cout << computer << " played " << top << endl << endl;
+}
