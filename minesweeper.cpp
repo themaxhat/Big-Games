@@ -22,13 +22,13 @@ using namespace std;
 void clearSection (int xCor, int yCor, string board[][xLength], string boardNums[][xLength], bool mines[][xLength], bool seen[][xLength]);
 void underground(string boardNums[][xLength]);
 void land(int looseMines, string board[][xLength]);
-void dig (int &looseMines, int &hiddenLooseMines, bool &game, string board[][xLength], bool flagged[][xLength], bool mines[][xLength], string boardNums[][xLength], bool seen[][xLength]);
+void dig (int &numOfMoves, int &looseMines, int &hiddenLooseMines, bool &game, string board[][xLength], bool flagged[][xLength], bool mines[][xLength], string boardNums[][xLength], bool seen[][xLength]);
 void plant(bool mines[][xLength], string boardNums[][xLength]);
 bool gameOver(bool flagged[][xLength], bool mines[][xLength], string board[][xLength]);
 
 
 int main(){
-
+	int numOfMoves = 0;
 	int looseMines = minesNumber;
 	int hiddenLooseMines = looseMines;
 	
@@ -57,7 +57,7 @@ int main(){
 		land(looseMines, board);
 		//underground(boardNums);
 
-		dig(looseMines, hiddenLooseMines, gameOn, board, flagged, mines, boardNums, seen);
+		dig(numOfMoves, looseMines, hiddenLooseMines, gameOn, board, flagged, mines, boardNums, seen);
 	}
 
 	return 0;
@@ -198,23 +198,23 @@ void land(int looseMines, string board[][xLength]){
 }
 
 //"digging" a spot (or flagging)
-void dig (int &looseMines, int &hiddenLooseMines, bool &gameOn, string board[][xLength], bool flagged[][xLength], bool mines[][xLength], string boardNums[][xLength], bool seen[][xLength]){
+void dig (int &numOfMoves, int &looseMines, int &hiddenLooseMines, bool &gameOn, string board[][xLength], bool flagged[][xLength], bool mines[][xLength], string boardNums[][xLength], bool seen[][xLength]){
 	int xCor;
 	int yCor;
 	string digOrFlag;
-	int numOfMoves = 0;
+	//int numOfMoves = 0;
 	
-	cout << "x coordinate: ";
-	cin >> yCor;
+	cout << "Coordinate (x y): ";
+	cin >> yCor >> xCor;
 	while (yCor > (xLength - 1) || yCor < 0){
-		cout << "That's not on the graph, try again. ";
+		cout << "That's not on the X axis, try again. ";
 		cin >> yCor;
 		cout << endl;
 	}
-	cout << "y coordinate: ";
-	cin >> xCor;
+	// cout << "y coordinate: ";
+	// cin >> xCor;
 	while (xCor > (yLength - 1) || xCor < 0){
-		cout << "That's not on the graph, try again. ";
+		cout << "That's not on Y axis, try again. ";
 		cin >> xCor;
 		cout << endl;
 	}
@@ -226,14 +226,14 @@ void dig (int &looseMines, int &hiddenLooseMines, bool &gameOn, string board[][x
 	if (digOrFlag != "dig" && digOrFlag != "flag" && digOrFlag != "cancel"){
 		cout << endl << "Not gonna work. Try again" << endl;
 
-		dig(looseMines, hiddenLooseMines, gameOn, board, flagged, mines, boardNums, seen);
+		dig(numOfMoves, looseMines, hiddenLooseMines, gameOn, board, flagged, mines, boardNums, seen);
 	}
 
 	if (numOfMoves == 0){
 		while (boardNums[xCor][yCor] != "   "){
 			plant(mines, boardNums);
 		}
-		numOfMoves++;
+		numOfMoves = 20;
 	}
 
 	//uncovering a spot
@@ -279,7 +279,7 @@ void dig (int &looseMines, int &hiddenLooseMines, bool &gameOn, string board[][x
 	
 	//cancelling your choice
 	if (digOrFlag == "cancel"){
-		dig(looseMines, hiddenLooseMines, gameOn, board, flagged, mines, boardNums, seen);
+		dig(numOfMoves, looseMines, hiddenLooseMines, gameOn, board, flagged, mines, boardNums, seen);
 	}
 }
 
@@ -381,7 +381,6 @@ bool gameOver(bool flagged[][xLength], bool mines[][xLength], string board[][xLe
 			}	
 		}
 	}
-
 
 	if (minesLeft == 0){
 		land(0, board);
