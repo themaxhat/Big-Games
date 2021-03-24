@@ -132,7 +132,7 @@ int minimax(string board[][7], bool taken[][7], vector <int> bottom, int alpha, 
 
     //base case
     //if ((depth == 0) || (game(board, taken, score))) {
-    if ((game(board, taken, score)) || (depth == 5)) {
+    if ((game(board, taken, score)) || (depth == 2)) {
 
         //cout << "looking at (terminal) node with value: " << score << endl;
         //draw(board);
