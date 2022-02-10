@@ -25,6 +25,17 @@ void plant(bool mines[][xLength], string boardNums[][xLength]);
 bool gameOver(bool flagged[][xLength], bool mines[][xLength], string board[][xLength]);
 
 
+class Node {
+    public:
+        bool isMine;
+        
+    private:
+        int x;
+        int y;
+
+};
+
+
 int main(){
 	int numOfMoves = 0;
 	int looseMines = minesNumber;
