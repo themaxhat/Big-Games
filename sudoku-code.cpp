@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int difficultyLevel = 15;
+int difficultyLevel = 100;
 
 string line = " +";
 char empty = ' ';
@@ -31,14 +31,63 @@ void repeatPrint(string str, int itr){
     }
 }
 
+bool findInY(int value, int xPosition){
+    bool found = false;
+    
+    for (int y = 0; y < 9; y++){
+        if (boardInt[y][xPosition] == value){
+            found = true;
+        }
+    }
+
+    cout << found;
+    return found;
+}
+
+bool findInX(int value, int yPosition){
+    for (int x = 0; x < 9; x++){
+        if (boardInt[yPosition][x] == value){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void place(int number){
+    int placeHolder = number;
+    int xCoordinate = rand() % 10;
+    int yCoordinate = rand() % 10;
+
+    
+    // if (boardBP[yCoordinate][xCoordinate] != empty || (findInX(number,yCoordinate) || findInY(number,xCoordinate)) ){
+    //     // place(placeHolder);
+    //     cout << "not valid - ";
+    // } else {
+    boardInt[yCoordinate][xCoordinate] = number;
+    //     cout << "valid - ";
+    // }
+
+    findInY(number,xCoordinate);
+
+}
+
 void fillBoard(){
     srand(time(NULL));
 
-    for (int y = 0; y < 9; y++){
-        for (int x = 0; x < 9; x++){
-            boardInt[y][x] = rand() % 9 + 1;
+    // for (int y = 0; y < 9; y++){
+    //     for (int x = 0; x < 9; x++){
+    //         boardInt[y][x] = rand() % 9 + 1;
+    //     }
+    // }
+
+    for (int i = 0; i < 9; i++){
+        for (int j = 1; j < 10; j++){
+            place(j);
+//            cout << "ooga booga 123 ";
         }
     }
+
 }
 
 void initializeBoard(){
@@ -73,7 +122,7 @@ void initializeBoard(){
                     boardBP[y][x] = '9';
                     break;
                 default:
-                    boardBP[y][x] = '0';
+                    boardBP[y][x] = ' ';
                     break;
             }
         }
